@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "canonical_documents": 12,
+  "body_words": 12002,
+  "actual_pdf_pages": 35,
+  "required_document_range": [
+    5,
+    20
+  ],
+  "required_page_range": [
+    30,
+    120
+  ],
+  "numbered_subsections": 104,
+  "explicit_cross_references_checked": 8,
+  "evaluation_cases": 25,
+  "answerable_cases": 20,
+  "guardrail_cases": 5,
+  "development_cases": 5,
+  "evidence_quotes_checked": 43,
+  "sha256_checks": "All 12 manifest hashes independently recalculated and verified",
+  "evaluation_status": "NOT_RUN",
+  "limitations": [
+    "No application implementation or model evaluation yet",
+    "No claim of legal or regulatory compliance",
+    "Editorial drafts awaiting student review",
+    "Programmatic checks do not establish semantic policy completeness"
+  ],
+  "visual_review": "All 35 final rendered pages inspected across six contact sheets; no clipping, overlaps, or pagination defects observed",
+  "pdf_body_bounds": "All body text within page margins; deepest body bottom 657.9 points on a 792-point page",
+  "source_lines_verified_in_pdf": 325,
+  "review_pdf_sha256": "51f770502904b0f94e8affd5f3a13dd21b255f95b9ce30de978d63c74104d334"
+}

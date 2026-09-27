@@ -1,0 +1,9 @@
+Lumen Vale Bank synthetic policy corpus - project reuse notice
+
+This corpus was originally authored with AI assistance for this academic project. It does not reproduce a real bank's policies or contain private customer, employee, or organizational records. All organizations, operations, monetary limits, channels, and policy choices are fictional.
+
+To the extent any rights attach to this project-authored text, permission is granted to use, copy, modify, publish, distribute, and include it in the academic repository and application, without fee. Preserve a clear synthetic-data designation and record material modifications. No warranty of factual, legal, regulatory, operational, or security fitness is provided. The text does not claim affiliation with an actual bank.
+
+The Quantic assignment PDF is not part of this corpus or reuse notice. Third-party software and models used later retain their own licenses. This notice does not grant rights in those materials.
+
+AI assistance: OpenAI Codex drafted the fictional profile, policies, evaluation references, and packaging. The student should review the drafts, understand the rules, record their edits, and disclose the assistance in the eventual ai-tooling.md submission file. No actual Board approval has occurred.
