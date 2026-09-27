@@ -105,12 +105,14 @@ def create_app(settings: Settings | None = None, *, generator=None, retriever_fa
             result = validate_answer(raw, hits)
             result.update(latency_ms=round((time.perf_counter() - start) * 1000, 1),
                           model=provider.model, prompt_version=PROMPT_VERSION,
+                          provider_attempts=getattr(generator, "last_attempt_count", 1),
                           index_fingerprint=service.record["fingerprint"])
             return jsonify(result)
         except ProviderError as exc:
-            return jsonify(error=str(exc)), exc.status
+            return jsonify(error=str(exc), provider_attempts=getattr(generator, "last_attempt_count", 1)), exc.status
         except AnswerValidationError:
-            return jsonify(error="The model answer failed citation checks. Please retry or rephrase."), 502
+            return jsonify(error="The model answer failed citation checks. Please retry or rephrase.",
+                           provider_attempts=getattr(generator, "last_attempt_count", 1)), 502
         except (CorpusError, ValueError, OSError):
             state["retriever"] = None
             return jsonify(error="Local policy data or index is unavailable or changed. Verify sources, rebuild the index, and restart."), 503

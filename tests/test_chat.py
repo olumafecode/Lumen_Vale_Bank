@@ -151,7 +151,7 @@ def test_provider_http_errors_do_not_leak_details(monkeypatch, status, expected)
 def test_provider_payload_and_json_response(monkeypatch):
     def respond(request, timeout):
         payload = json.loads(request.data)
-        assert timeout == 30
+        assert 0 < timeout <= 30
         assert payload["response_format"]["type"] == "json_schema"
         assert payload["response_format"]["json_schema"]["strict"] is True
         schema = payload["response_format"]["json_schema"]["schema"]
@@ -208,3 +208,65 @@ def test_schema_does_not_replace_quote_validation():
     assert Draft202012Validator(answer_format([HIT])["json_schema"]["schema"]).is_valid(value)
     with pytest.raises(AnswerValidationError, match="not an exact source"):
         validate_answer(value, [HIT])
+
+
+def test_json_format_error_retries_once_with_same_evidence(monkeypatch):
+    calls = []
+    def respond(request, timeout):
+        payload = json.loads(request.data)
+        calls.append(payload)
+        if len(calls) == 1:
+            raise urllib.error.HTTPError("url", 400, "invalid", {}, io.BytesIO(
+                b'{"error":{"code":"json_validate_failed","failed_generation":"untrusted"}}'))
+        return io.BytesIO(json.dumps({"choices": [{"finish_reason": "stop",
+            "message": {"content": json.dumps(answer())}}]}).encode())
+    monkeypatch.setattr("urllib.request.urlopen", respond)
+    generator = GroqGenerator(ProviderSettings("test-key"))
+    assert generator.generate("Leave?", [HIT])["answerable"]
+    assert generator.last_attempt_count == 2
+    assert calls[0]["messages"][1] == calls[1]["messages"][1]
+    assert "FORMAT REPAIR" in calls[1]["messages"][0]["content"]
+    assert "untrusted" not in calls[1]["messages"][0]["content"].split("FORMAT REPAIR:")[1]
+
+
+def test_json_format_retries_are_bounded(monkeypatch):
+    count = []
+    def fail(*args, **kwargs):
+        count.append(1)
+        raise urllib.error.HTTPError("url", 400, "invalid", {}, io.BytesIO(
+            b'{"error":{"code":"json_validate_failed"}}'))
+    monkeypatch.setattr("urllib.request.urlopen", fail)
+    generator = GroqGenerator(ProviderSettings("test-key"))
+    with pytest.raises(ProviderError):
+        generator.generate("Leave?", [HIT])
+    assert len(count) == 2
+
+
+def test_unrelated_bad_request_is_not_retried(monkeypatch):
+    count = []
+    def fail(*args, **kwargs):
+        count.append(1)
+        raise urllib.error.HTTPError("url", 400, "invalid", {}, io.BytesIO(
+            b'{"error":{"code":"unsupported_model"}}'))
+    monkeypatch.setattr("urllib.request.urlopen", fail)
+    with pytest.raises(ProviderError):
+        GroqGenerator(ProviderSettings("test-key")).generate("Leave?", [HIT])
+    assert len(count) == 1
+
+
+def test_compound_queries_keep_evidence_from_each_question():
+    from policy_assistant.retrieval import HybridRetriever
+    service = object.__new__(HybridRetriever)
+    calls = []
+    def ranked(question, k):
+        calls.append(question)
+        return [{"chunk_id": question + str(i)} for i in range(k)]
+    service._search_one = ranked
+    hits = service.search("Who checks adjustments? Also, what meal costs are covered?", k=4)
+    assert calls == ["Who checks adjustments", "what meal costs are covered"]
+    assert len(hits) == 8
+    assert hits[0]["chunk_id"].startswith("Who")
+    assert hits[1]["chunk_id"].startswith("what")
+    calls.clear()
+    assert len(service.search("Explain password and authentication rules", k=4)) == 4
+    assert len(calls) == 1

@@ -9,7 +9,7 @@ Open this project's existing .env file and add these lines, replacing the placeh
     GROQ_API_KEY=your_key
     LLM_MODEL=openai/gpt-oss-20b
 
-Get the key from https://console.groq.com/keys. Never paste it into chat, commit it, or copy it into .env.example. Free-plan quotas depend on the account; check the provider console. The app makes no paid fallback or automatic retry.
+Get the key from https://console.groq.com/keys. Never paste it into chat, commit it, or copy it into .env.example. Free-plan quotas depend on the account; check the provider console. The app makes no paid fallback. It permits one automatic retry only for provider JSON-format validation failures.
 
 In a terminal at the project root:
 
@@ -36,7 +36,7 @@ Questions are limited to 1,200 characters and 256 embedding tokens. Requests are
 
 ## Retrieval and guardrails
 
-The 106 original Chroma chunks are unchanged. Hybrid retrieval fuses top-20 dense and BM25 rankings with reciprocal rank fusion (constant 60), then supplies four passages to generation. BM25 uses indexed passage text and source titles only. No evaluation answers enter the source index.
+The 106 original Chroma chunks are unchanged. Hybrid retrieval fuses top-20 dense and BM25 rankings with reciprocal rank fusion (constant 60), then supplies four passages per explicit question part, deduplicated with a maximum of 12. BM25 uses indexed passage text and source titles only. No evaluation answers enter the source index.
 
 The system prompt treats the question and passages as untrusted data, limits answers to the fictional policies, and requests abstention when evidence is insufficient. Each claim must reference retrieved chunk IDs and exact supporting quotes. Server validation rejects unknown IDs, invented quotes, missing citations, excessive output, and malformed results. Source changes during generation block the answer. Model text is rendered as text, never HTML.
 

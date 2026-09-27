@@ -34,6 +34,26 @@ class HybridRetriever(Retriever):
     def search(self, question, k=4):
         if not isinstance(question, str) or not question.strip() or not 1 <= k <= 20:
             raise ValueError("Provide a question and k between 1 and 20.")
+        # Split only explicit question boundaries, never fabricate missing facts.
+        parts = [p.strip(" ,") for p in re.split(
+            r"\?\s*(?:also,?\s*)?|\s+and\s+(?=(?:does|can|must|should|what|when|who|how)\b)",
+            question, flags=re.I) if p.strip(" ,")]
+        if not 2 <= len(parts) <= 3:
+            return self._search_one(question, k)
+        rankings = [self._search_one(part, k) for part in parts]
+        merged, seen = [], set()
+        for rank in range(k):
+            for ranking in rankings:
+                if rank < len(ranking):
+                    hit = ranking[rank]
+                    if hit["chunk_id"] not in seen:
+                        merged.append(hit)
+                        seen.add(hit["chunk_id"])
+        return merged[:min(12, k * len(parts))]
+
+    def _search_one(self, question, k=4):
+        if not isinstance(question, str) or not question.strip() or not 1 <= k <= 20:
+            raise ValueError("Provide a question and k between 1 and 20.")
         self.check_fresh()
         dense = super().search(question, k=20)
         terms = set(words(question))

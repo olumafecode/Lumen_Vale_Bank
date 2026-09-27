@@ -26,3 +26,11 @@ Live verification is pending. Run:
 The diagnostic now prints refused explicitly for structurally valid results. Keep its new uniquely named file alongside the first diagnostic. Check both schema compliance and answer support before deciding to rerun the benchmark.
 
 Any repeat of the original benchmark after this repair must be labeled a benchmark-informed development rerun, not a new untouched held-out result. Retain the first-run failure measurements. Human review and final evaluation remain incomplete.
+
+## Compound retrieval and bounded provider repair
+
+The next live diagnostic (20260927T214407Z-c3c59e21) showed that strict schema mode alone did not resolve generation: Groq returned HTTP 400 with json_validate_failed and a list-shaped failed_generation. The other compound question lacked its privacy-deadline evidence, making refusal appropriate for the retrieved context.
+
+Version policy-claims-v3-compound now retrieves independently for up to three explicit question parts, four chunks per part with deduplication and a 12-chunk maximum. Single questions retain their original hybrid retrieval. The prompt explicitly requires all claims in one object. A provider HTTP 400 json_validate_failed receives at most one formatting-repair retry with the same question/evidence and original safeguards. No failed_generation content is executed, adopted as an answer, or sent back as an instruction. Rate limits and other errors are not retried by this adapter. Client timing includes the provider retry; responses record provider_attempts.
+
+72 automated tests passed. Real local retrieval now supplies both needed policy sections for each compound development prompt (eight chunks each); details are in stage-5-compound-retrieval.json. Live generation remains pending. These changes are benchmark-informed development; the initial benchmark and both diagnostics remain unchanged.

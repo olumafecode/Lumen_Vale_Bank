@@ -2,6 +2,7 @@
 import argparse
 from datetime import datetime, timezone
 import json
+import io
 import time
 import urllib.error
 import urllib.request
@@ -48,14 +49,16 @@ def main():
             # Save only selected diagnostic fields. Never record authorization headers,
             # .env content, raw request objects, or unrestricted error messages.
             try:
-                payload = json.loads(exc.read(262144))
+                error_bytes = exc.read(262144)
+                payload = json.loads(error_bytes)
                 error = payload.get("error", {})
                 for name in ("code", "type", "failed_generation"):
                     if isinstance(error.get(name), str):
                         provider_failure[name] = error[name][:16000]
             except (ValueError, AttributeError):
                 pass
-            raise
+            raise urllib.error.HTTPError(exc.url, exc.code, exc.reason, exc.headers,
+                                         io.BytesIO(locals().get("error_bytes", b""))) from None
     for position, case in enumerate(cases):
         if position:
             time.sleep(args.delay)
@@ -77,6 +80,9 @@ def main():
             row["status"] = "provider_failed"
             row["app_status"] = exc.status
             row["error"] = str(exc)
+            row["provider_diagnostic"] = dict(provider_failure)
+        row["provider_attempts"] = getattr(generator, "last_attempt_count", 1)
+        if provider_failure:
             row["provider_diagnostic"] = dict(provider_failure)
         report["results"].append(row)
         path.parent.mkdir(parents=True, exist_ok=True)

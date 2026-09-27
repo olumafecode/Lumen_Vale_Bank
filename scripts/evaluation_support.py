@@ -49,6 +49,8 @@ def measurements(cases, results):
         "failed_requests": [{"id": r["id"], "status": r["http_status"],
                              "seconds": r["duration_seconds"]} for r in requested if r["http_status"] != 200],
         "total_retry_count": sum(max(0, len(r["attempts"]) - 1) for r in requested),
+        "provider_format_retry_count": sum(max(0, a.get("response", {}).get("provider_attempts", 1) - 1)
+                                           for r in requested for a in r["attempts"]),
         "latency_definition": "Client HTTP send through complete body, including any retry waits; successful HTTP responses include refusals."
     }
 

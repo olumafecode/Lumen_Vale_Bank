@@ -1,0 +1,350 @@
+{
+  "scope": "development formatting diagnosis; not held-out evaluation",
+  "model": "openai/gpt-oss-20b",
+  "prompt_version": "policy-claims-v2-schema",
+  "index_fingerprint": "608707a76e72de502d9b83bd8fbf411c250b9bff9380c6293dece6c5f2a9dde9",
+  "results": [
+    {
+      "id": "D01-control",
+      "question": "May an administrator use an everyday account for privileged work?",
+      "retrieved": [
+        {
+          "chunk_id": "f2d97e04683ea6aa693e1ddb021857b4cf4ad551c768847edfd86750751379c5",
+          "text": "This policy covers workforce authentication to LVB-managed applications, devices, privileged accounts, and remote access. Customer online-banking authentication is outside scope. Every workforce account must identify one person or an approved service. Shared human accounts are prohibited, including shared branch teller logins. Managers sponsor access; the Service Desk provisions it through AccessDesk after the required approval.",
+          "metadata": {
+            "title": "Password and Authentication Policy",
+            "section_id": "LVB-01#1.1",
+            "source_sha256": "73abb0918ecb7c382eeef044e628b7f05721299fbdac074427d26786d62ed3ea",
+            "document_id": "LVB-01",
+            "line_end": 16,
+            "line_start": 15,
+            "token_count": 85,
+            "version": "1.0",
+            "section_title": "1.1 Scope and ownership",
+            "char_end": 432,
+            "page": 0,
+            "source_path": "corpus/lvb-01-password-and-authentication.md",
+            "effective_date": "2026-10-01",
+            "char_start": 0
+          },
+          "cosine_distance": 0.5031225681304932,
+          "retrieval_score": 0.032266458495966696
+        },
+        {
+          "chunk_id": "546f9e72afdb213a03a0b7eaddadfd5fd2904aa8b761bca9453aacdb1e32d4ba",
+          "text": "Before leave, record open tasks, deadlines, and the delegated role in an approved team location. Delegation does not authorize password sharing or transfer of an individual's approval authority. Access changes must use AccessDesk. Employees handling cash, payment approval, or privileged administration must take at least five consecutive working days of annual leave each calendar year, scheduled with their manager for continuity and independent oversight.",
+          "metadata": {
+            "char_start": 0,
+            "source_sha256": "3c0723ae3c1e207140fa734768a92ee15621163557c83e9791633bb88eb0ffff",
+            "version": "1.0",
+            "document_id": "LVB-05",
+            "source_path": "corpus/lvb-05-leave-holidays-and-separation.md",
+            "char_end": 458,
+            "section_id": "LVB-05#1.3",
+            "page": 0,
+            "title": "Staff Leave, Holidays, and Separation Policy",
+            "section_title": "1.3 Handover",
+            "line_end": 28,
+            "token_count": 96,
+            "effective_date": "2026-10-01",
+            "line_start": 25
+          },
+          "cosine_distance": 0.5826156735420227,
+          "retrieval_score": 0.03125763125763126
+        },
+        {
+          "chunk_id": "982901636074352021fba5eb2e8db8404a9726c500f58a202d8db0c27884c100",
+          "text": "Human-account passwords must contain at least 14 characters. Staff must use a unique password for each bank system where a separate password is needed and must not reuse a personal password. The system checks proposed passwords against a blocked list of common or compromised values. The bank does not impose a universal periodic password-change interval; a change is required when compromise is suspected or confirmed, a temporary password is issued, or the CISO directs a documented security reset.\n\nMultifactor authentication (MFA) is required for bank email, remote access, privileged access, and systems containing Confidential or Restricted data. Use a bank-approved authenticator application or hardware security key. SMS is not an approved standard factor in this fictional policy. Privileged administrators must use a hardware security key and a separate administrative account; their everyday account must not hold standing administrator privileges.",
+          "metadata": {
+            "char_start": 0,
+            "section_title": "1.2 Password and multifactor requirements",
+            "source_sha256": "73abb0918ecb7c382eeef044e628b7f05721299fbdac074427d26786d62ed3ea",
+            "document_id": "LVB-01",
+            "line_end": 21,
+            "effective_date": "2026-10-01",
+            "title": "Password and Authentication Policy",
+            "token_count": 184,
+            "version": "1.0",
+            "section_id": "LVB-01#1.2",
+            "char_end": 959,
+            "page": 0,
+            "line_start": 18,
+            "source_path": "corpus/lvb-01-password-and-authentication.md"
+          },
+          "cosine_distance": 0.6632828712463379,
+          "retrieval_score": 0.03009207275993712
+        },
+        {
+          "chunk_id": "8554e63d89b1757c59b3c374ff9f48b40ca81da211a2ced84bd632c476fa510b",
+          "text": "A service account needs a named business owner, technical custodian, documented purpose, minimum access, and review date. Store secrets in the approved secrets vault, not the application repository. Prefer short-lived credentials where the system supports them. If a static service secret is necessary, rotate it at least every 90 calendar days and immediately after suspected exposure or loss of an authorized custodian's access where exposure cannot be ruled out.\n\nService accounts must not be used for interactive employee sign-in. Their owners review use and permissions quarterly. Disable an unused service account after the owner confirms it has no active dependency; test the change and record rollback arrangements. A human-account password's no-routine-expiry rule does not apply to static service secrets.",
+          "metadata": {
+            "version": "1.0",
+            "token_count": 170,
+            "section_id": "LVB-01#3.1",
+            "char_end": 815,
+            "source_path": "corpus/lvb-01-password-and-authentication.md",
+            "line_start": 47,
+            "line_end": 50,
+            "document_id": "LVB-01",
+            "title": "Password and Authentication Policy",
+            "char_start": 0,
+            "effective_date": "2026-10-01",
+            "source_sha256": "73abb0918ecb7c382eeef044e628b7f05721299fbdac074427d26786d62ed3ea",
+            "page": 0,
+            "section_title": "3.1 Non-human credentials"
+          },
+          "cosine_distance": 0.5533542633056641,
+          "retrieval_score": 0.030017921146953404
+        }
+      ],
+      "raw_model_output": {
+        "answerable": true,
+        "claims": [
+          {
+            "text": "An administrator must not use an everyday human account for privileged work; a separate administrative account and hardware security key are required.",
+            "citations": [
+              {
+                "chunk_id": "982901636074352021fba5eb2e8db8404a9726c500f58a202d8db0c27884c100",
+                "quote": "Privileged administrators must use a hardware security key and a separate administrative account; their everyday account must not hold standing administrator privileges."
+              }
+            ]
+          }
+        ]
+      },
+      "validated_answer": {
+        "answer": "An administrator must not use an everyday human account for privileged work; a separate administrative account and hardware security key are required. [1]",
+        "claims": [
+          {
+            "text": "An administrator must not use an everyday human account for privileged work; a separate administrative account and hardware security key are required.",
+            "citation_numbers": [
+              1
+            ]
+          }
+        ],
+        "citations": [
+          {
+            "number": 1,
+            "chunk_id": "982901636074352021fba5eb2e8db8404a9726c500f58a202d8db0c27884c100",
+            "document_id": "LVB-01",
+            "title": "Password and Authentication Policy",
+            "section_id": "LVB-01#1.2",
+            "snippet": "Privileged administrators must use a hardware security key and a separate administrative account; their everyday account must not hold standing administrator privileges.",
+            "url": "/sources/982901636074352021fba5eb2e8db8404a9726c500f58a202d8db0c27884c100"
+          }
+        ],
+        "refused": false
+      },
+      "status": "valid",
+      "refused": false
+    },
+    {
+      "id": "D01+D05",
+      "question": "May an administrator use an everyday account for privileged work? Also, What is the internal response target for a privacy request?",
+      "retrieved": [
+        {
+          "chunk_id": "f2d97e04683ea6aa693e1ddb021857b4cf4ad551c768847edfd86750751379c5",
+          "text": "This policy covers workforce authentication to LVB-managed applications, devices, privileged accounts, and remote access. Customer online-banking authentication is outside scope. Every workforce account must identify one person or an approved service. Shared human accounts are prohibited, including shared branch teller logins. Managers sponsor access; the Service Desk provisions it through AccessDesk after the required approval.",
+          "metadata": {
+            "source_sha256": "73abb0918ecb7c382eeef044e628b7f05721299fbdac074427d26786d62ed3ea",
+            "page": 0,
+            "source_path": "corpus/lvb-01-password-and-authentication.md",
+            "section_id": "LVB-01#1.1",
+            "effective_date": "2026-10-01",
+            "version": "1.0",
+            "title": "Password and Authentication Policy",
+            "line_end": 16,
+            "line_start": 15,
+            "token_count": 85,
+            "document_id": "LVB-01",
+            "char_end": 432,
+            "char_start": 0,
+            "section_title": "1.1 Scope and ownership"
+          },
+          "cosine_distance": 0.4480278491973877,
+          "retrieval_score": 0.02921395544346364
+        },
+        {
+          "chunk_id": "982901636074352021fba5eb2e8db8404a9726c500f58a202d8db0c27884c100",
+          "text": "Human-account passwords must contain at least 14 characters. Staff must use a unique password for each bank system where a separate password is needed and must not reuse a personal password. The system checks proposed passwords against a blocked list of common or compromised values. The bank does not impose a universal periodic password-change interval; a change is required when compromise is suspected or confirmed, a temporary password is issued, or the CISO directs a documented security reset.\n\nMultifactor authentication (MFA) is required for bank email, remote access, privileged access, and systems containing Confidential or Restricted data. Use a bank-approved authenticator application or hardware security key. SMS is not an approved standard factor in this fictional policy. Privileged administrators must use a hardware security key and a separate administrative account; their everyday account must not hold standing administrator privileges.",
+          "metadata": {
+            "document_id": "LVB-01",
+            "source_path": "corpus/lvb-01-password-and-authentication.md",
+            "page": 0,
+            "section_id": "LVB-01#1.2",
+            "section_title": "1.2 Password and multifactor requirements",
+            "title": "Password and Authentication Policy",
+            "char_start": 0,
+            "char_end": 959,
+            "version": "1.0",
+            "source_sha256": "73abb0918ecb7c382eeef044e628b7f05721299fbdac074427d26786d62ed3ea",
+            "token_count": 184,
+            "line_end": 21,
+            "effective_date": "2026-10-01",
+            "line_start": 18
+          },
+          "cosine_distance": 0.6218758225440979,
+          "retrieval_score": 0.029051670471052088
+        },
+        {
+          "chunk_id": "b5a45df00bf8eef6e1126a9e89df0bf5e1a86fab58c6074d28e8d283c773c4b3",
+          "text": "The person preparing a manual account adjustment cannot approve it. The person requesting their own expense cannot approve reimbursement. The person creating or changing a supplier's bank details cannot be the sole approver of the related payment. Access provisioning requires business-owner approval, and privileged access also requires CISO approval. The Service Desk implements the approved change; approval and implementation evidence must be distinguishable.\n\nIf a small team cannot separate duties locally, route the check to an authorized independent person in Operations or Finance before execution. Staff absence does not justify self-approval. Branch-specific cash controls are in LVB-04. Expense approval levels in LVB-11 govern expense claims and do not replace branch payout controls; equal monetary values in different processes do not imply equal approval authority.",
+          "metadata": {
+            "token_count": 177,
+            "effective_date": "2026-10-01",
+            "source_sha256": "6452dbf8c5a1532e58efbfedacaeaed145e0e53b921108eb397c60c6d61f272c",
+            "page": 0,
+            "section_id": "LVB-08#1.2",
+            "section_title": "1.2 Maker and checker",
+            "document_id": "LVB-08",
+            "version": "1.0",
+            "char_end": 881,
+            "char_start": 0,
+            "line_start": 20,
+            "line_end": 23,
+            "title": "Internal Control, Approvals, and Assurance Policy",
+            "source_path": "corpus/lvb-08-internal-controls.md"
+          },
+          "cosine_distance": 0.6091876029968262,
+          "retrieval_score": 0.028612012987012988
+        },
+        {
+          "chunk_id": "88a5c74ed64133b35f9f3997fbc4db011f6b546267e984cd26f6fafe938bb6e7",
+          "text": "This policy applies to bank information in electronic, paper, verbal, and photographed form, whether used in a branch, at head office, or remotely. Information owners assign one of four labels. Public information has an approved external release. Internal information is ordinary staff-only material. Confidential information includes internal financial reports and nonpublic business plans. Restricted information includes customer identification documents, account data, employee medical records, authentication secrets, and investigation identities.\n\nIf information is unlabelled, treat it as Confidential until its owner classifies it. If a file mixes classes, apply the highest class to the whole file unless the owner separates it safely. Public availability of one field does not make a combined customer record Public. LVB-06 provides privacy-specific handling and retention rules.",
+          "metadata": {
+            "source_sha256": "a12f27b94f79bda5e281ed5a00dbd21b130c76f58e22168dc4d11e276d72348a",
+            "section_title": "1.1 Scope and classification",
+            "title": "Information Security and Incident Response Policy",
+            "char_start": 0,
+            "page": 0,
+            "source_path": "corpus/lvb-02-information-security.md",
+            "version": "1.0",
+            "line_start": 15,
+            "line_end": 18,
+            "document_id": "LVB-02",
+            "char_end": 889,
+            "section_id": "LVB-02#1.1",
+            "effective_date": "2026-10-01",
+            "token_count": 170
+          },
+          "cosine_distance": 0.5953859686851501,
+          "retrieval_score": 0.027598020555767037
+        }
+      ],
+      "raw_model_output": {
+        "answerable": false,
+        "claims": []
+      },
+      "validated_answer": {
+        "answer": "I can only answer about our policies. I could not find enough supporting evidence to answer this question.",
+        "claims": [],
+        "citations": [],
+        "refused": true
+      },
+      "status": "valid",
+      "refused": true
+    },
+    {
+      "id": "D02+D03",
+      "question": "Who checks a manual account adjustment prepared by a teller? Also, How much of a CU 32 eligible travel meal can be reimbursed?",
+      "retrieved": [
+        {
+          "chunk_id": "fbd971ad86c6a65155c2b48107a6f2a184ed8b1880aab05145ad199cd312ef16",
+          "text": "Reimburse reasonable, necessary business costs supported by receipts: approved transport, accommodation, meals during approved business travel, and approved business supplies. Hotel reimbursement is capped at CU 150 per night excluding separately itemized mandatory lodging taxes. Meals are capped at CU 40 per travel day including taxes and tips. These are reimbursement ceilings, not automatic allowances; claim actual eligible spending.\n\nAlcohol, entertainment unrelated to the approved purpose, personal purchases, penalties, companion travel, and ordinary commuting are not reimbursable. Personal vehicle business mileage is reimbursed at CU 0.30 per kilometer using an approved route log; ordinary commuting is excluded. Staff must not also claim fuel for the same mileage. Remote-working days do not automatically qualify for internet, furniture, or utility reimbursement.",
+          "metadata": {
+            "token_count": 188,
+            "section_id": "LVB-11#2.2",
+            "document_id": "LVB-11",
+            "source_path": "corpus/lvb-11-remote-work-travel-and-expenses.md",
+            "line_end": 39,
+            "effective_date": "2026-10-01",
+            "page": 0,
+            "version": "1.0",
+            "title": "Remote Work, Travel, and Expense Policy",
+            "char_end": 879,
+            "line_start": 36,
+            "section_title": "2.2 Eligible costs and limits",
+            "char_start": 0,
+            "source_sha256": "6a803a32ee6b9944c0ff0348243fcc3235b831a49e16bee7c4ddd03c0e5e7e3b"
+          },
+          "cosine_distance": 0.4430193305015564,
+          "retrieval_score": 0.03252247488101534
+        },
+        {
+          "chunk_id": "a15d159d1d89331c33d4f2b48707da246d0cd4af42f9482f8eabe38ff62fe3e0",
+          "text": "A cash payout of more than CU 5,000 requires Branch Manager approval before release, in addition to normal verification. A payout of exactly CU 5,000 does not trigger this additional amount-based approval. If the manager initiated the transaction, an authorized independent deputy or the Head of Operations approves it instead. Any suspicious pattern must be referred regardless of value.\n\nAll manual account adjustments require an independent checker before posting. The preparer records the reason, supporting evidence, affected account reference, and proposed amount. The checker verifies the evidence and authority. Staff must not split a transaction or adjustment to avoid a threshold, use a customer's identity to test a system, or approve their own work. These are internal example controls, not statutory thresholds.",
+          "metadata": {
+            "source_path": "corpus/lvb-04-branch-operations.md",
+            "token_count": 171,
+            "section_id": "LVB-04#2.1",
+            "version": "1.0",
+            "effective_date": "2026-10-01",
+            "line_start": 31,
+            "section_title": "2.1 Fictional approval thresholds",
+            "char_start": 0,
+            "document_id": "LVB-04",
+            "title": "Branch Operations and Cash Handling Policy",
+            "page": 0,
+            "source_sha256": "2a168dd1d7ad5d6e8acea82b60978ff7defbeaca8f200afb6e0b81b09ed33f9e",
+            "char_end": 824,
+            "line_end": 34
+          },
+          "cosine_distance": 0.45316964387893677,
+          "retrieval_score": 0.03200204813108039
+        },
+        {
+          "chunk_id": "f6b97903d66b054b09f1f93cd87a78790488978345736191c7dd2c64b87408a2",
+          "text": "A staff member creates a CU 200 manual account adjustment. An independent authorized checker is required even though the amount is below the branch cash-payout threshold; these are different controls. A manager submits an expense claim and routes approval upward rather than approving it themselves. A payment system fails and an engineer receives emergency access for two hours after the required approvals; access is removed when work finishes after 40 minutes, and Security reviews the activity by the next business-day end.\n\nWhen a control is not described, staff ask the process owner for a written procedure. They must not interpret silence as permission to omit review. A new recurring control should be documented and approved through policy governance before being represented as an existing rule in the policy assistant.",
+          "metadata": {
+            "line_start": 57,
+            "token_count": 167,
+            "section_id": "LVB-08#3.3",
+            "document_id": "LVB-08",
+            "page": 0,
+            "effective_date": "2026-10-01",
+            "title": "Internal Control, Approvals, and Assurance Policy",
+            "section_title": "3.3 Worked control examples",
+            "char_end": 830,
+            "version": "1.0",
+            "source_path": "corpus/lvb-08-internal-controls.md",
+            "char_start": 0,
+            "line_end": 59,
+            "source_sha256": "6452dbf8c5a1532e58efbfedacaeaed145e0e53b921108eb397c60c6d61f272c"
+          },
+          "cosine_distance": 0.5223983526229858,
+          "retrieval_score": 0.03149801587301587
+        },
+        {
+          "chunk_id": "e23978618ad1d8b39f8467d2c332970736e34858b9a400d7c6ff848b3f6c3a37",
+          "text": "Keep expense claims and supporting records for seven years after the relevant financial year-end under LVB-06. Remote-work approvals are personnel records retained for six years after departure. People Operations and Operations review remote arrangements at least every three months; Finance reviews expense exceptions quarterly for repeated issues.\n\nExample: CU 32 in eligible meals yields CU 32 reimbursement, not the CU 40 cap. Example: a teller assigned to cash service cannot perform that duty remotely. Example: a claim with CU 480 in hotel charges and CU 60 in eligible meals totals CU 540 and needs the additional claim-total approval, even when each category is within its daily cap.",
+          "metadata": {
+            "section_title": "3.3 Records and examples",
+            "line_end": 59,
+            "source_sha256": "6a803a32ee6b9944c0ff0348243fcc3235b831a49e16bee7c4ddd03c0e5e7e3b",
+            "effective_date": "2026-10-01",
+            "document_id": "LVB-11",
+            "section_id": "LVB-11#3.3",
+            "token_count": 148,
+            "line_start": 57,
+            "source_path": "corpus/lvb-11-remote-work-travel-and-expenses.md",
+            "version": "1.0",
+            "page": 0,
+            "char_start": 0,
+            "char_end": 692,
+            "title": "Remote Work, Travel, and Expense Policy"
+          },
+          "cosine_distance": 0.5409862995147705,
+          "retrieval_score": 0.03131881575727918
+        }
+      ],
+      "status": "provider_failed",
+      "app_status": 502,
+      "error": "The generation provider could not complete the request. Check model availability or retry.",
+      "provider_diagnostic": {
+        "http_status": 400,
+        "code": "json_validate_failed",
+        "type": "invalid_request_error",
+        "failed_generation": "[\n{\"answerable\":true,\"claims\":[{\"text\":\"A teller’s manual account adjustment must be checked by an independent checker before posting.\",\"citations\":[{\"chunk_id\":\"a15d159d1d89331c33d4f2b48707da246d0cd4af42f9482f8eabe38ff62fe3e0\",\"quote\":\"All manual account adjustments require an independent checker before posting. The preparer records the reason, supporting evidence, affected account reference, and proposed amount. The checker verifies the evidence and authority.\"}]}]},{\"text\":\"The maximum reimbursable amount for a CU 32 eligible travel meal is CU 32, not the CU 40 daily cap.\",\"citations\":[{\"chunk_id\":\"e23978618ad1d8b39f8467d2c332970736e34858b9a400d7c6ff848b3f6c3a37\",\"quote\":\"Example: CU 32 in eligible meals yields CU 32 reimbursement, not the CU 40 cap.\"}]}\n]"
+      }
+    }
+  ]
+}

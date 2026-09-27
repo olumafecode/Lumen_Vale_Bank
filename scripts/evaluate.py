@@ -108,11 +108,12 @@ def main():
                 "max_completion_tokens": 2048, "reasoning_effort": "low" if provider.model.startswith("openai/gpt-oss-") else "provider_default",
                 "prompt_version": PROMPT_VERSION, "system_prompt": SYSTEM_PROMPT,
                 "response_format": "strict_json_schema_with_retrieved_chunk_id_enum",
-                "retrieval": {"method": "BM25+dense RRF", "k": 4, "candidates_each": 20, "rrf_constant": 60},
+                "retrieval": {"method": "BM25+dense RRF", "k_per_question": 4, "max_context_chunks": 12, "max_question_parts": 3, "candidates_each": 20, "rrf_constant": 60},
                 "index": json.loads((root / "data/index/active.json").read_text()),
                 "python": platform.python_version(), "os": platform.platform(),
                 "packages": {d.metadata["Name"]: d.version for d in importlib.metadata.distributions()},
                 "pacing_seconds": args.delay, "max_429_retries": 1, "retry_wait_seconds": args.retry_wait,
+                "provider_format_retries": 1, "provider_timeout_budget_seconds": 30,
                 "answer_cache": False, "startup_seconds": time.perf_counter() - startup,
                 "seeds": {"random": settings.random_seed},
                 "benchmark_exposure": "First run is held-out. Subsequent code changes informed by these results invalidate an unbiased held-out claim."}
