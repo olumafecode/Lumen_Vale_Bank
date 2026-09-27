@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ hit.metadata.title }} | Lumen Vale</title><link rel="stylesheet" href="/static/app.css"></head>
+<body><main><header><a class="brand" href="/">LV<span>BACK TO POLICY DESK</span></a></header>
+<p class="eyebrow">{{ hit.metadata.document_id }} · VERSION {{ hit.metadata.version }}</p>
+<h1 class="source-title">{{ hit.metadata.title }}</h1>
+<h2>{{ hit.metadata.section_title }}</h2>
+<p class="hint">{{ hit.metadata.section_id }} · Effective {{ hit.metadata.effective_date }}
+{% if hit.metadata.page %} · Page {{ hit.metadata.page }}{% else %} · Source lines {{ hit.metadata.line_start }}–{{ hit.metadata.line_end }}{% endif %}</p>
+<article class="source-text">{{ hit.text }}</article>
+<p class="hint">This is the indexed passage supporting the citation. A long section may span multiple passages.</p>
+<footer>Fictional educational policies. Lumen Vale Bank is not a real bank.</footer></main></body></html>

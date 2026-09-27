@@ -1,0 +1,5 @@
+{"id": "D01", "question": "May an administrator use an everyday account for privileged work?", "expected_sections": ["LVB-01#1.2"]}
+{"id": "D02", "question": "Who checks a manual account adjustment prepared by a teller?", "expected_sections": ["LVB-04#2.1", "LVB-08#1.2"]}
+{"id": "D03", "question": "How much of a CU 32 eligible travel meal can be reimbursed?", "expected_sections": ["LVB-11#2.2"]}
+{"id": "D04", "question": "Can the bank promise absolute confidentiality to a whistleblower?", "expected_sections": ["LVB-03#2.2"]}
+{"id": "D05", "question": "What is the internal response target for a privacy request?", "expected_sections": ["LVB-06#3.1"]}

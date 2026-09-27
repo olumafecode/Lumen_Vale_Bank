@@ -1,0 +1,521 @@
+{
+  "scope": "five development prompts only; not final RAG evaluation",
+  "created_at": "2026-09-27T06:07:34.803847+00:00",
+  "fingerprint": "608707a76e72de502d9b83bd8fbf411c250b9bff9380c6293dece6c5f2a9dde9",
+  "k": 4,
+  "any_hit_rate": 0.8,
+  "mean_expected_section_recall": 0.7,
+  "cases": [
+    {
+      "id": "D01",
+      "question": "May an administrator use an everyday account for privileged work?",
+      "expected_sections": [
+        "LVB-01#1.2"
+      ],
+      "retrieved_sections": [
+        "LVB-01#1.1",
+        "LVB-01#3.1",
+        "LVB-05#1.3",
+        "LVB-10#3.3"
+      ],
+      "any_expected_section_hit": false,
+      "expected_section_recall": 0.0,
+      "seconds": 0.5507,
+      "hits": [
+        {
+          "chunk_id": "f2d97e04683ea6aa693e1ddb021857b4cf4ad551c768847edfd86750751379c5",
+          "text": "This policy covers workforce authentication to LVB-managed applications, devices, privileged accounts, and remote access. Customer online-banking authentication is outside scope. Every workforce account must identify one person or an approved service. Shared human accounts are prohibited, including shared branch teller logins. Managers sponsor access; the Service Desk provisions it through AccessDesk after the required approval.",
+          "metadata": {
+            "version": "1.0",
+            "page": 0,
+            "char_start": 0,
+            "section_title": "1.1 Scope and ownership",
+            "title": "Password and Authentication Policy",
+            "source_path": "corpus/lvb-01-password-and-authentication.md",
+            "document_id": "LVB-01",
+            "line_start": 15,
+            "effective_date": "2026-10-01",
+            "line_end": 16,
+            "token_count": 85,
+            "source_sha256": "73abb0918ecb7c382eeef044e628b7f05721299fbdac074427d26786d62ed3ea",
+            "char_end": 432,
+            "section_id": "LVB-01#1.1"
+          },
+          "cosine_distance": 0.5031225681304932
+        },
+        {
+          "chunk_id": "8554e63d89b1757c59b3c374ff9f48b40ca81da211a2ced84bd632c476fa510b",
+          "text": "A service account needs a named business owner, technical custodian, documented purpose, minimum access, and review date. Store secrets in the approved secrets vault, not the application repository. Prefer short-lived credentials where the system supports them. If a static service secret is necessary, rotate it at least every 90 calendar days and immediately after suspected exposure or loss of an authorized custodian's access where exposure cannot be ruled out.\n\nService accounts must not be used for interactive employee sign-in. Their owners review use and permissions quarterly. Disable an unused service account after the owner confirms it has no active dependency; test the change and record rollback arrangements. A human-account password's no-routine-expiry rule does not apply to static service secrets.",
+          "metadata": {
+            "char_start": 0,
+            "version": "1.0",
+            "page": 0,
+            "source_sha256": "73abb0918ecb7c382eeef044e628b7f05721299fbdac074427d26786d62ed3ea",
+            "token_count": 170,
+            "title": "Password and Authentication Policy",
+            "document_id": "LVB-01",
+            "line_start": 47,
+            "source_path": "corpus/lvb-01-password-and-authentication.md",
+            "section_title": "3.1 Non-human credentials",
+            "char_end": 815,
+            "line_end": 50,
+            "section_id": "LVB-01#3.1",
+            "effective_date": "2026-10-01"
+          },
+          "cosine_distance": 0.5533542633056641
+        },
+        {
+          "chunk_id": "546f9e72afdb213a03a0b7eaddadfd5fd2904aa8b761bca9453aacdb1e32d4ba",
+          "text": "Before leave, record open tasks, deadlines, and the delegated role in an approved team location. Delegation does not authorize password sharing or transfer of an individual's approval authority. Access changes must use AccessDesk. Employees handling cash, payment approval, or privileged administration must take at least five consecutive working days of annual leave each calendar year, scheduled with their manager for continuity and independent oversight.",
+          "metadata": {
+            "section_id": "LVB-05#1.3",
+            "token_count": 96,
+            "page": 0,
+            "version": "1.0",
+            "source_sha256": "3c0723ae3c1e207140fa734768a92ee15621163557c83e9791633bb88eb0ffff",
+            "source_path": "corpus/lvb-05-leave-holidays-and-separation.md",
+            "char_start": 0,
+            "effective_date": "2026-10-01",
+            "char_end": 458,
+            "line_start": 25,
+            "section_title": "1.3 Handover",
+            "document_id": "LVB-05",
+            "title": "Staff Leave, Holidays, and Separation Policy",
+            "line_end": 28
+          },
+          "cosine_distance": 0.5826156735420227
+        },
+        {
+          "chunk_id": "fe193855dfb62fc803c2f292ac42da175adf55bc42e69f21b455d9c5d3c2a63d",
+          "text": "A journalist asks a teller whether a branch outage was a cyberattack. The teller records the inquiry and refers it to Corporate Communication, using only the approved customer-service message. A manager requests an expense approval by chat; the employee submits the StaffHub claim and obtains the required approval there. An employee sees an incorrect public fee claim; they report it immediately and preserve the published version rather than replacing it without review.\n\nStaff receive communication and confidentiality guidance at induction. Official-account custodians receive role-specific publishing training before access is granted, and their access is reviewed quarterly. Departing custodians hand over account ownership through AccessDesk; they do not share their password with a successor.",
+          "metadata": {
+            "token_count": 160,
+            "source_path": "corpus/lvb-10-internal-and-corporate-communication.md",
+            "title": "Internal and Corporate Communication Policy",
+            "section_id": "LVB-10#3.3",
+            "source_sha256": "3446d981f38e4f95f9cc80b29e86129134da18c4cd606cea40c9d3b986f8ada4",
+            "effective_date": "2026-10-01",
+            "char_start": 0,
+            "line_start": 57,
+            "document_id": "LVB-10",
+            "line_end": 59,
+            "section_title": "3.3 Examples and training",
+            "char_end": 800,
+            "version": "1.0",
+            "page": 0
+          },
+          "cosine_distance": 0.5997004508972168
+        }
+      ]
+    },
+    {
+      "id": "D02",
+      "question": "Who checks a manual account adjustment prepared by a teller?",
+      "expected_sections": [
+        "LVB-04#2.1",
+        "LVB-08#1.2"
+      ],
+      "retrieved_sections": [
+        "LVB-04#1.2",
+        "LVB-04#1.3",
+        "LVB-04#2.1",
+        "LVB-04#3.2"
+      ],
+      "any_expected_section_hit": true,
+      "expected_section_recall": 0.5,
+      "seconds": 0.1143,
+      "hits": [
+        {
+          "chunk_id": "a15d159d1d89331c33d4f2b48707da246d0cd4af42f9482f8eabe38ff62fe3e0",
+          "text": "A cash payout of more than CU 5,000 requires Branch Manager approval before release, in addition to normal verification. A payout of exactly CU 5,000 does not trigger this additional amount-based approval. If the manager initiated the transaction, an authorized independent deputy or the Head of Operations approves it instead. Any suspicious pattern must be referred regardless of value.\n\nAll manual account adjustments require an independent checker before posting. The preparer records the reason, supporting evidence, affected account reference, and proposed amount. The checker verifies the evidence and authority. Staff must not split a transaction or adjustment to avoid a threshold, use a customer's identity to test a system, or approve their own work. These are internal example controls, not statutory thresholds.",
+          "metadata": {
+            "source_sha256": "2a168dd1d7ad5d6e8acea82b60978ff7defbeaca8f200afb6e0b81b09ed33f9e",
+            "effective_date": "2026-10-01",
+            "section_id": "LVB-04#2.1",
+            "line_start": 31,
+            "title": "Branch Operations and Cash Handling Policy",
+            "version": "1.0",
+            "token_count": 171,
+            "line_end": 34,
+            "source_path": "corpus/lvb-04-branch-operations.md",
+            "page": 0,
+            "section_title": "2.1 Fictional approval thresholds",
+            "document_id": "LVB-04",
+            "char_start": 0,
+            "char_end": 824
+          },
+          "cosine_distance": 0.4368385076522827
+        },
+        {
+          "chunk_id": "35809fe8573077bdca301e02b940d7115a7b7d091172094a7916180e2c02edcf",
+          "text": "Before disclosing account information or processing a transaction, staff complete the approved customer-verification workflow and record its result. A familiar face or colleague's recognition does not replace the workflow. New accounts and changes that require due diligence follow LVB-09; branch staff cannot waive missing verification documents. Customer-identification data must not be copied into ordinary chat or personal notes.\n\nHandle customers respectfully and provide reasonable service alternatives within available procedures. Do not discuss account balances where other customers can hear. If identity is uncertain, pause the requested disclosure or transaction and refer to the Branch Manager. Do not tell the customer that an account is suspicious or reveal an internal investigation.",
+          "metadata": {
+            "line_end": 23,
+            "document_id": "LVB-04",
+            "section_title": "1.2 Identity and service boundaries",
+            "token_count": 154,
+            "section_id": "LVB-04#1.2",
+            "title": "Branch Operations and Cash Handling Policy",
+            "source_sha256": "2a168dd1d7ad5d6e8acea82b60978ff7defbeaca8f200afb6e0b81b09ed33f9e",
+            "char_end": 798,
+            "version": "1.0",
+            "char_start": 0,
+            "effective_date": "2026-10-01",
+            "line_start": 20,
+            "source_path": "corpus/lvb-04-branch-operations.md",
+            "page": 0
+          },
+          "cosine_distance": 0.4643365740776062
+        },
+        {
+          "chunk_id": "fa3dcde1edecac6649f5cbb19507d0ee95623d0942e654191a0391e9d0d69b2f",
+          "text": "Each teller uses an individually assigned till and login. Transfers into or out of shared cash custody require two authorized staff to verify the amount and record both identities. Record a transfer at the time it occurs, not at the end of the day from memory. Neither person may sign for the other. Cash-service supervision and financial review must remain separate where required by LVB-08.",
+          "metadata": {
+            "char_end": 392,
+            "char_start": 0,
+            "effective_date": "2026-10-01",
+            "version": "1.0",
+            "source_path": "corpus/lvb-04-branch-operations.md",
+            "section_title": "1.3 Dual control and allocation",
+            "line_end": 28,
+            "document_id": "LVB-04",
+            "title": "Branch Operations and Cash Handling Policy",
+            "source_sha256": "2a168dd1d7ad5d6e8acea82b60978ff7defbeaca8f200afb6e0b81b09ed33f9e",
+            "page": 0,
+            "line_start": 25,
+            "token_count": 92,
+            "section_id": "LVB-04#1.3"
+          },
+          "cosine_distance": 0.4801594614982605
+        },
+        {
+          "chunk_id": "cb7fbe6b89493698ce4f7706a25647c6a1611e3e77cd5557823e1888d1ed36e3",
+          "text": "At close, each teller reconciles the till; an independent checker reviews the result and unresolved differences. Two authorized staff verify transfer into shared custody. The Branch Manager checks the daily exception log, outstanding complaints, unposted adjustments, and handover items. The closing checklist identifies each preparer and reviewer and the time of completion.\n\nUnresolved differences remain visible overnight as open cases with an assigned owner. They are not a reason to falsify a balanced position. The manager sends the daily reconciliation summary to Operations by 17:00. If an incident prevents completion, send a status report by 17:00 identifying missing checks and the assigned recovery owner, then complete the evidence when safe.",
+          "metadata": {
+            "line_end": 55,
+            "document_id": "LVB-04",
+            "source_path": "corpus/lvb-04-branch-operations.md",
+            "token_count": 155,
+            "title": "Branch Operations and Cash Handling Policy",
+            "char_start": 0,
+            "section_id": "LVB-04#3.2",
+            "char_end": 755,
+            "page": 0,
+            "effective_date": "2026-10-01",
+            "version": "1.0",
+            "section_title": "3.2 Closing evidence",
+            "source_sha256": "2a168dd1d7ad5d6e8acea82b60978ff7defbeaca8f200afb6e0b81b09ed33f9e",
+            "line_start": 52
+          },
+          "cosine_distance": 0.48574304580688477
+        }
+      ]
+    },
+    {
+      "id": "D03",
+      "question": "How much of a CU 32 eligible travel meal can be reimbursed?",
+      "expected_sections": [
+        "LVB-11#2.2"
+      ],
+      "retrieved_sections": [
+        "LVB-07#2.1",
+        "LVB-11#2.2",
+        "LVB-11#2.3",
+        "LVB-11#3.1"
+      ],
+      "any_expected_section_hit": true,
+      "expected_section_recall": 1.0,
+      "seconds": 0.0999,
+      "hits": [
+        {
+          "chunk_id": "fbd971ad86c6a65155c2b48107a6f2a184ed8b1880aab05145ad199cd312ef16",
+          "text": "Reimburse reasonable, necessary business costs supported by receipts: approved transport, accommodation, meals during approved business travel, and approved business supplies. Hotel reimbursement is capped at CU 150 per night excluding separately itemized mandatory lodging taxes. Meals are capped at CU 40 per travel day including taxes and tips. These are reimbursement ceilings, not automatic allowances; claim actual eligible spending.\n\nAlcohol, entertainment unrelated to the approved purpose, personal purchases, penalties, companion travel, and ordinary commuting are not reimbursable. Personal vehicle business mileage is reimbursed at CU 0.30 per kilometer using an approved route log; ordinary commuting is excluded. Staff must not also claim fuel for the same mileage. Remote-working days do not automatically qualify for internet, furniture, or utility reimbursement.",
+          "metadata": {
+            "token_count": 188,
+            "document_id": "LVB-11",
+            "title": "Remote Work, Travel, and Expense Policy",
+            "section_title": "2.2 Eligible costs and limits",
+            "char_end": 879,
+            "source_path": "corpus/lvb-11-remote-work-travel-and-expenses.md",
+            "line_end": 39,
+            "version": "1.0",
+            "effective_date": "2026-10-01",
+            "section_id": "LVB-11#2.2",
+            "page": 0,
+            "line_start": 36,
+            "source_sha256": "6a803a32ee6b9944c0ff0348243fcc3235b831a49e16bee7c4ddd03c0e5e7e3b",
+            "char_start": 0
+          },
+          "cosine_distance": 0.3563409447669983
+        },
+        {
+          "chunk_id": "5a73a84a2270a2bedb92ee8775c228812ef1e880664515f544ff1f77a7772e89",
+          "text": "A hotel or meal expense above its cap needs prior written Finance Controller approval, with the reason and approved maximum recorded in StaffHub. Approval of the trip alone does not waive a category cap. If an unexpected essential cost could not reasonably be preapproved, explain it promptly; Finance assesses it individually and reimbursement is not guaranteed. Gift and hospitality restrictions in LVB-07 still apply to spending claimed as a business expense.",
+          "metadata": {
+            "token_count": 107,
+            "char_start": 0,
+            "title": "Remote Work, Travel, and Expense Policy",
+            "line_start": 41,
+            "source_path": "corpus/lvb-11-remote-work-travel-and-expenses.md",
+            "effective_date": "2026-10-01",
+            "line_end": 44,
+            "version": "1.0",
+            "page": 0,
+            "char_end": 462,
+            "section_id": "LVB-11#2.3",
+            "source_sha256": "6a803a32ee6b9944c0ff0348243fcc3235b831a49e16bee7c4ddd03c0e5e7e3b",
+            "section_title": "2.3 Above-limit requests",
+            "document_id": "LVB-11"
+          },
+          "cosine_distance": 0.5714246034622192
+        },
+        {
+          "chunk_id": "56d75663b26dd365d813d529936000be58d4186c67b4b8a4cfd223dd136e511e",
+          "text": "Submit an expense claim within 15 calendar days after the trip ends or, for a non-travel expense, after the purchase date. Attach itemized receipts, business purpose, dates, cost center, prior approvals, and a mileage log where applicable. If a receipt is missing, provide a signed explanation and alternative evidence for Finance review; a missing receipt is not automatically approved or automatically evidence of misconduct.\n\nThe line manager checks business purpose and approved scope. Finance checks calculations, category limits, duplicate claims, and evidence. An expense claim totaling more than CU 500 requires Finance Controller approval in addition to manager approval before payment. Exactly CU 500 does not trigger this extra claim-total approval. A CU 900 trip may therefore need no additional trip-budget approval but still need Finance Controller approval for its claim. Trip and claim thresholds govern different steps.",
+          "metadata": {
+            "title": "Remote Work, Travel, and Expense Policy",
+            "line_end": 50,
+            "source_path": "corpus/lvb-11-remote-work-travel-and-expenses.md",
+            "page": 0,
+            "document_id": "LVB-11",
+            "char_end": 936,
+            "section_id": "LVB-11#3.1",
+            "version": "1.0",
+            "token_count": 185,
+            "char_start": 0,
+            "line_start": 47,
+            "effective_date": "2026-10-01",
+            "source_sha256": "6a803a32ee6b9944c0ff0348243fcc3235b831a49e16bee7c4ddd03c0e5e7e3b",
+            "section_title": "3.1 Submission and evidence"
+          },
+          "cosine_distance": 0.6024407148361206
+        },
+        {
+          "chunk_id": "6b185a891856f92295bdaa0256ccb6570954d7b58140dbe75d2b93b435c67e64",
+          "text": "Cash, cash equivalents, personal loans from customers or suppliers, and gifts intended to influence a decision are prohibited regardless of value. A noncash gift or hospitality valued at CU 50 or less may be accepted only if occasional, unsolicited, unrelated to a pending decision, and unlikely to create obligation. Record every accepted item in the gift register within two business days.\n\nAn item worth more than CU 50 requires written Compliance Officer approval before acceptance. If advance approval is impossible, decline it or place it in bank custody pending a decision; do not use it personally. Once a giver's cumulative accepted value would exceed CU 100 in a calendar year, Compliance approval is required before that additional item is accepted, even if each item is individually below CU 50.\n\nNo gift or hospitality from a bidder may be accepted by a person participating in the active procurement decision, regardless of value. Compliance approval cannot override this prohibition. If the Compliance Officer is the recipient, the non-conflicted Head of",
+          "metadata": {
+            "title": "Ethics, Conflicts, and Staff Conduct Policy",
+            "token_count": 218,
+            "line_start": 31,
+            "source_sha256": "7c4a00087a71d9880a4f571f6461f7b4276082f84cc103cb7cd0c0a6dfb5b2b6",
+            "line_end": 36,
+            "char_start": 0,
+            "page": 0,
+            "source_path": "corpus/lvb-07-ethics-and-conduct.md",
+            "effective_date": "2026-10-01",
+            "section_title": "2.1 Gifts and hospitality",
+            "document_id": "LVB-07",
+            "section_id": "LVB-07#2.1",
+            "version": "1.0",
+            "char_end": 1069
+          },
+          "cosine_distance": 0.6075229048728943
+        }
+      ]
+    },
+    {
+      "id": "D04",
+      "question": "Can the bank promise absolute confidentiality to a whistleblower?",
+      "expected_sections": [
+        "LVB-03#2.2"
+      ],
+      "retrieved_sections": [
+        "LVB-03#1.1",
+        "LVB-03#2.2",
+        "LVB-03#3.1",
+        "LVB-07#1.2"
+      ],
+      "any_expected_section_hit": true,
+      "expected_section_recall": 1.0,
+      "seconds": 0.1037,
+      "hits": [
+        {
+          "chunk_id": "b59466f0a2089309e5267810a0871ca456c08c443306fc6828762eb09b0ad248",
+          "text": "Within five business days of receipt, the intake officer completes an initial assessment and decides whether investigation, referral, further information, or closure is appropriate. An investigator must be independent of the subject and the disputed decision. Conflicted staff must not select the investigator, access witness identities, or approve findings. The investigator documents facts, evidence sources, interviews, and limits to the evidence without presuming guilt.\n\nThe bank protects identities on a need-to-know basis but cannot promise absolute confidentiality. If disclosure is necessary for a fair investigation or a required process, the case owner explains the proposed disclosure to the reporter where safe and practicable and records the rationale. Witnesses receive the same need-to-know protection.",
+          "metadata": {
+            "document_id": "LVB-03",
+            "token_count": 160,
+            "page": 0,
+            "effective_date": "2026-10-01",
+            "version": "1.0",
+            "section_title": "2.2 Independent assessment",
+            "line_start": 36,
+            "section_id": "LVB-03#2.2",
+            "title": "Whistleblowing and Protected Reporting Policy",
+            "char_end": 818,
+            "char_start": 0,
+            "source_path": "corpus/lvb-03-whistleblowing.md",
+            "source_sha256": "09b7e335a4106e0e0555b55647575892dddc3f8581ef9a9d6b122333dcccc082",
+            "line_end": 39
+          },
+          "cosine_distance": 0.3528518080711365
+        },
+        {
+          "chunk_id": "94adbf65bb05e2fe581eea0c1b5195c59728224e9deb735bfadc80b232252416",
+          "text": "LVB encourages honest reporting of suspected fraud, bribery, concealment of losses, customer mistreatment, falsified records, serious control failures, privacy misuse, and retaliation. A reporter need not prove wrongdoing before raising a reasonable concern. A concern that is not substantiated does not, by itself, imply dishonesty. Knowingly fabricated allegations may be addressed through the conduct process; honest mistakes remain protected.\n\nRetaliation is prohibited against reporters, witnesses, people who assist an investigation, and staff who refuse an improper instruction. Examples include threats, unjustified shift changes, blocked training, or adverse treatment because a person raised a concern. Report suspected retaliation through any route below; it is assessed separately from the original allegation.",
+          "metadata": {
+            "char_end": 822,
+            "page": 0,
+            "version": "1.0",
+            "token_count": 167,
+            "effective_date": "2026-10-01",
+            "source_path": "corpus/lvb-03-whistleblowing.md",
+            "section_id": "LVB-03#1.1",
+            "char_start": 0,
+            "line_start": 15,
+            "line_end": 18,
+            "document_id": "LVB-03",
+            "title": "Whistleblowing and Protected Reporting Policy",
+            "section_title": "1.1 Purpose and protection",
+            "source_sha256": "09b7e335a4106e0e0555b55647575892dddc3f8581ef9a9d6b122333dcccc082"
+          },
+          "cosine_distance": 0.44170403480529785
+        },
+        {
+          "chunk_id": "ac646f0baf5ed75481a44d8680e3c7fa6ce3efebc0d5fc0638ed49469f01c58d",
+          "text": "Use customer and employee records only for an assigned business purpose. Looking up a friend, relative, public figure, or colleague out of curiosity is prohibited even if system access technically allows it. Staff must not process their own account transactions or approve transactions for a close relative. Route such matters to an independent authorized colleague and record the conflict without sharing unnecessary personal detail.\n\nDo not discuss Confidential or Restricted information in public spaces, personal messages, social media, or unapproved AI tools. Leaving the bank does not authorize disclosure of information obtained during employment. Data retention and legitimate disclosure follow LVB-06; confidentiality is not an excuse to hide evidence from an authorized independent investigation.",
+          "metadata": {
+            "section_title": "1.2 Confidentiality and account access",
+            "token_count": 153,
+            "source_path": "corpus/lvb-07-ethics-and-conduct.md",
+            "version": "1.0",
+            "char_start": 0,
+            "line_start": 20,
+            "source_sha256": "7c4a00087a71d9880a4f571f6461f7b4276082f84cc103cb7cd0c0a6dfb5b2b6",
+            "document_id": "LVB-07",
+            "page": 0,
+            "line_end": 23,
+            "effective_date": "2026-10-01",
+            "section_id": "LVB-07#1.2",
+            "char_end": 806,
+            "title": "Ethics, Conflicts, and Staff Conduct Policy"
+          },
+          "cosine_distance": 0.502823531627655
+        },
+        {
+          "chunk_id": "6daf88daf33d72cf2d852f7f0181370ee533596b1eab447a80e44a8b078a6937",
+          "text": "The investigator distinguishes supported findings, unsupported allegations, and unresolved facts. The authorized decision maker approves corrective action independently of the investigation subject. The reporter receives a closure summary where contact is possible, explaining whether the concern was addressed and how to request review. The summary must not disclose another person's medical information, disciplinary details, or unrelated customer records.\n\nThe case owner records action owners and due dates and checks completion. A finding of no misconduct does not remove the duty to protect the reporter from retaliation. People Operations and the reviewer assess any reported adverse treatment without giving a line manager unnecessary access to the allegation. Temporary protective arrangements must not punish the reporter by default.",
+          "metadata": {
+            "title": "Whistleblowing and Protected Reporting Policy",
+            "source_sha256": "09b7e335a4106e0e0555b55647575892dddc3f8581ef9a9d6b122333dcccc082",
+            "line_start": 47,
+            "effective_date": "2026-10-01",
+            "char_end": 843,
+            "document_id": "LVB-03",
+            "token_count": 155,
+            "page": 0,
+            "version": "1.0",
+            "source_path": "corpus/lvb-03-whistleblowing.md",
+            "char_start": 0,
+            "section_id": "LVB-03#3.1",
+            "section_title": "3.1 Closing a case",
+            "line_end": 50
+          },
+          "cosine_distance": 0.506953775882721
+        }
+      ]
+    },
+    {
+      "id": "D05",
+      "question": "What is the internal response target for a privacy request?",
+      "expected_sections": [
+        "LVB-06#3.1"
+      ],
+      "retrieved_sections": [
+        "LVB-02#1.1",
+        "LVB-02#2.3",
+        "LVB-06#3.1",
+        "LVB-10#1.2"
+      ],
+      "any_expected_section_hit": true,
+      "expected_section_recall": 1.0,
+      "seconds": 0.1018,
+      "hits": [
+        {
+          "chunk_id": "a98e8b5ae03139b3c9e465f93d67a19459ab19c98775986e4f3936af9ad09806",
+          "text": "For ordinary internal email requiring action, acknowledge within two business days or set an out-of-office message naming an authorized alternate. This is an acknowledgment target, not a promise to complete every request in two days. The sender identifies the action, owner, and requested date. The recipient should clarify an unrealistic deadline and route the work appropriately.\n\nUrgent security incidents use the on-call Security route within 15 minutes of discovery; do not rely on a manager reading email. Whistleblowing, privacy, and customer complaints use their own timelines. A general communication service target never extends a shorter policy deadline. If a restricted system is unavailable, use its documented fallback rather than an unapproved public channel.",
+          "metadata": {
+            "char_end": 774,
+            "line_start": 20,
+            "char_start": 0,
+            "document_id": "LVB-10",
+            "source_path": "corpus/lvb-10-internal-and-corporate-communication.md",
+            "effective_date": "2026-10-01",
+            "source_sha256": "3446d981f38e4f95f9cc80b29e86129134da18c4cd606cea40c9d3b986f8ada4",
+            "section_id": "LVB-10#1.2",
+            "page": 0,
+            "line_end": 23,
+            "title": "Internal and Corporate Communication Policy",
+            "section_title": "1.2 Response expectations and urgent messages",
+            "token_count": 164,
+            "version": "1.0"
+          },
+          "cosine_distance": 0.4989045262336731
+        },
+        {
+          "chunk_id": "88a5c74ed64133b35f9f3997fbc4db011f6b546267e984cd26f6fafe938bb6e7",
+          "text": "This policy applies to bank information in electronic, paper, verbal, and photographed form, whether used in a branch, at head office, or remotely. Information owners assign one of four labels. Public information has an approved external release. Internal information is ordinary staff-only material. Confidential information includes internal financial reports and nonpublic business plans. Restricted information includes customer identification documents, account data, employee medical records, authentication secrets, and investigation identities.\n\nIf information is unlabelled, treat it as Confidential until its owner classifies it. If a file mixes classes, apply the highest class to the whole file unless the owner separates it safely. Public availability of one field does not make a combined customer record Public. LVB-06 provides privacy-specific handling and retention rules.",
+          "metadata": {
+            "section_title": "1.1 Scope and classification",
+            "title": "Information Security and Incident Response Policy",
+            "effective_date": "2026-10-01",
+            "document_id": "LVB-02",
+            "source_path": "corpus/lvb-02-information-security.md",
+            "token_count": 170,
+            "section_id": "LVB-02#1.1",
+            "source_sha256": "a12f27b94f79bda5e281ed5a00dbd21b130c76f58e22168dc4d11e276d72348a",
+            "line_end": 18,
+            "line_start": 15,
+            "char_end": 889,
+            "char_start": 0,
+            "page": 0,
+            "version": "1.0"
+          },
+          "cosine_distance": 0.5115846395492554
+        },
+        {
+          "chunk_id": "df46f03cb18a5f494c6879151a0cbad07b4e25aa3a49de7ce9f156ada48dc02b",
+          "text": "When personal data may be affected, the incident lead notifies the DPO within one hour of Security's receipt of the report. The DPO and Compliance Officer determine any external notification obligations for the scenario; this corpus supplies no statutory deadline. Only authorized communication owners may notify customers or media. Staff must not speculate in group chats or contact affected customers independently.",
+          "metadata": {
+            "char_end": 417,
+            "section_title": "2.3 Privacy and communication coordination",
+            "source_path": "corpus/lvb-02-information-security.md",
+            "document_id": "LVB-02",
+            "version": "1.0",
+            "effective_date": "2026-10-01",
+            "title": "Information Security and Incident Response Policy",
+            "source_sha256": "a12f27b94f79bda5e281ed5a00dbd21b130c76f58e22168dc4d11e276d72348a",
+            "section_id": "LVB-02#2.3",
+            "page": 0,
+            "token_count": 90,
+            "char_start": 0,
+            "line_end": 44,
+            "line_start": 41
+          },
+          "cosine_distance": 0.5130577087402344
+        },
+        {
+          "chunk_id": "be2b8790cc394f256861200370c5248552570623efd21a43d0d0eb36f4a40573",
+          "text": "Anyone receiving a request to access, correct, or delete personal data must send it to the DPO's restricted Privacy queue by the end of the next business day. Staff must not refuse a request because it uses informal wording. Record the receipt time and request type using minimal data, and avoid sending full account files into the intake record.\n\nThe DPO acknowledges receipt within three business days of the bank's original receipt and verifies identity through an approved process before releasing information or making sensitive changes. The internal response target is 20 business days from original receipt. If identity or scope remains unresolved, the DPO explains the issue, records the reason for delay, and provides a revised target. These are invented internal service targets, not statutory time limits.",
+          "metadata": {
+            "title": "Data Protection, Privacy, and Retention Policy",
+            "version": "1.0",
+            "page": 0,
+            "source_path": "corpus/lvb-06-data-protection-and-privacy.md",
+            "char_start": 0,
+            "document_id": "LVB-06",
+            "effective_date": "2026-10-01",
+            "source_sha256": "51d58fe5396b60e4389582c6834f3252a3ccb94d5142765e6a0e516a6d9194e0",
+            "line_end": 50,
+            "section_id": "LVB-06#3.1",
+            "line_start": 47,
+            "char_end": 816,
+            "token_count": 172,
+            "section_title": "3.1 Request intake and verification"
+          },
+          "cosine_distance": 0.5281897783279419
+        }
+      ]
+    }
+  ]
+}

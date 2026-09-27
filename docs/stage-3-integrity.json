@@ -1,0 +1,27 @@
+{
+  "chunks": 106,
+  "sections": 104,
+  "documents": 12,
+  "maximum_actual_tokens": 218,
+  "dimensions": 384,
+  "sample_vector_norm": 1.0,
+  "health": {
+    "corpus": {
+      "corpus_id": "lumen-vale-bank-v1",
+      "documents": 12,
+      "source_format": "markdown",
+      "status": "verified"
+    },
+    "index": {
+      "chunks": 106,
+      "documents": 12,
+      "fingerprint": "608707a76e72de502d9b83bd8fbf411c250b9bff9380c6293dece6c5f2a9dde9",
+      "ready": true,
+      "status": "built"
+    },
+    "rag_ready": false,
+    "service": "lumen-vale-policy-assistant",
+    "stage": 3,
+    "status": "ok"
+  }
+}

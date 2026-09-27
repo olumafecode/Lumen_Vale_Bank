@@ -1,0 +1,5 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+# Dedicated disposable directory; pytest clears it at the start of each run.
+addopts = "-ra --basetemp=.pytest_cache/tmp"

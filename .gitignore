@@ -1,0 +1,30 @@
+# Local credentials; example configuration is safe to commit.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local environments, caches, and generated runtime data.
+.venv/
+.venv-*/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+data/index/*
+!data/index/.gitkeep
+data/cache/*
+!data/cache/.gitkeep
+evaluation/runs/*
+!evaluation/runs/.gitkeep
+*.log
+*.zip

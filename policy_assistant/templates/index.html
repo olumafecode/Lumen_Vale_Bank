@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lumen Vale | Policy assistant</title>
+<link rel="stylesheet" href="/static/app.css"><script src="/static/chat.js" defer></script></head>
+<body><main>
+<header><a class="brand" href="/">LV<span>LUMEN VALE BANK</span></a><span class="tag">POLICY DESK</span></header>
+<section class="intro"><p class="eyebrow">CLEAR ANSWERS. ORIGINAL SOURCES.</p>
+<h1>Your policies,<br>within reach.</h1>
+<p>Ask about staff leave, security, branch operations, expenses, and more. Each supported answer includes the policy passages behind it.</p></section>
+<div id="status" class="status" role="status">Checking the assistant…</div>
+<div class="suggestions" aria-label="Example questions">
+<button type="button" data-question="How many annual leave days do full-time staff receive?">Annual leave</button>
+<button type="button" data-question="What should I do if I suspect a security incident?">Report an incident</button>
+<button type="button" data-question="What are the meal reimbursement limits?">Travel expenses</button></div>
+<section id="messages" aria-live="polite" aria-label="Conversation"><p class="empty">Start with a policy question. Include the details that matter.</p></section>
+<form id="chat-form"><label for="question">Your question</label><div class="composer">
+<textarea id="question" name="question" rows="3" maxlength="1200" required placeholder="What does our policy say about…?"></textarea>
+<button id="send" type="submit">Ask assistant <span aria-hidden="true">↗</span></button></div>
+<p class="hint">Each question stands alone. Previous messages are not sent with your next question.</p></form>
+<footer><span>Fictional bank · Academic demonstration</span><a href="/health">Service status</a><button id="clear" type="button">Clear conversation</button>
+<p>Questions and retrieved policy excerpts are sent to Groq to generate answers. Do not enter personal or customer data. Check cited passages before relying on an answer.</p></footer>
+</main></body></html>

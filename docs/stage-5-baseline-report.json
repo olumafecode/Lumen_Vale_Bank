@@ -1,0 +1,115 @@
+{
+  "run_id": "20260927T210223Z-9a00acb7",
+  "run_status": "complete",
+  "system": {
+    "answerable_total": 20,
+    "answerable_attempted": 20,
+    "http_completed": 7,
+    "latency_sample_size": 7,
+    "substantive_answers": 7,
+    "coverage": 0.35,
+    "http_failure_rate_among_attempted": 0.65,
+    "p50_seconds_nearest_rank": 0.8289990000193939,
+    "p95_seconds_nearest_rank": 1.2037211999995634,
+    "failed_requests": [
+      {
+        "id": "Q01",
+        "status": 502,
+        "seconds": 0.8845915000420064
+      },
+      {
+        "id": "Q03",
+        "status": 502,
+        "seconds": 0.8339078999706544
+      },
+      {
+        "id": "Q05",
+        "status": 502,
+        "seconds": 0.9896387999760918
+      },
+      {
+        "id": "Q06",
+        "status": 502,
+        "seconds": 0.9796954999910668
+      },
+      {
+        "id": "Q07",
+        "status": 502,
+        "seconds": 1.1694960999884643
+      },
+      {
+        "id": "Q08",
+        "status": 502,
+        "seconds": 0.9868266000412405
+      },
+      {
+        "id": "Q09",
+        "status": 502,
+        "seconds": 1.2219806000357494
+      },
+      {
+        "id": "Q11",
+        "status": 502,
+        "seconds": 0.9226066999835894
+      },
+      {
+        "id": "Q13",
+        "status": 502,
+        "seconds": 0.7757309000007808
+      },
+      {
+        "id": "Q16",
+        "status": 502,
+        "seconds": 1.1135440000216477
+      },
+      {
+        "id": "Q18",
+        "status": 502,
+        "seconds": 0.7639323999756016
+      },
+      {
+        "id": "Q19",
+        "status": 502,
+        "seconds": 0.8748027999536134
+      },
+      {
+        "id": "Q20",
+        "status": 502,
+        "seconds": 1.1599538999726065
+      }
+    ],
+    "total_retry_count": 0,
+    "latency_definition": "Client HTTP send through complete body, including any retry waits; successful HTTP responses include refusals."
+  },
+  "quality": {
+    "status": "human_review_pending",
+    "pending_ids": [
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10",
+      "Q11",
+      "Q12",
+      "Q13",
+      "Q14",
+      "Q15",
+      "Q16",
+      "Q17",
+      "Q18",
+      "Q19",
+      "Q20",
+      "Q21",
+      "Q22",
+      "Q23",
+      "Q24",
+      "Q25"
+    ],
+    "note": "No semantic scores calculated from incomplete or AI-only review."
+  }
+}
