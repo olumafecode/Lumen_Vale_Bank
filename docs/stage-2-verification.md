@@ -31,7 +31,11 @@ The test suite checks honest RAG readiness, successful source verification, land
 
 The clean-checkout exercise created a separate environment and installed only runtime dependencies first, then imported the app and made actual HTTP requests. It subsequently ran the documented Python bootstrap to install the full development lock and execute the tests. A preliminary PowerShell helper was blocked by the host's execution policy; it was replaced with Python rather than changing that policy. A preliminary check started before one package installation had finished; final checks were rerun after installation completed and passed.
 
-## Boundaries
+## Follow-up: Windows temporary-folder permissions
+
+A subsequent VS Code test run reported `WinError 5` for the user-level `pytest-of-sanya` directory, causing all 12 temporary-directory-dependent cases to error. The project configuration now assigns a dedicated `.pytest_cache/tmp` base directory, which pytest can manage inside the project. The normal test command was rerun after this change: **14 passed in 1.39 seconds**. No Windows permissions or system temporary folders were modified. The original fresh-install evidence above predates this configuration fix.
+
+## Remaining scope
 
 No API key, LLM request, model download, vector index, GitHub Actions run, remote repository, or public deployment was used. Groundedness, citation accuracy, and model latency remain NOT_RUN. The source corpus remains synthetic draft content. Linux and macOS commands are documented but have not been executed on those operating systems.
 

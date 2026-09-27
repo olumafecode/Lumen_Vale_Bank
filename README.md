@@ -57,6 +57,20 @@ For a runtime-only environment, install `requirements.txt` instead. `waitress` s
 
 ## Configuration and secrets
 
+### Windows test temporary-directory permissions
+
+If pytest reports `PermissionError: [WinError 5]` for `AppData/Local/Temp/pytest-of-...`, its default temporary directory is inaccessible to the current process. The project config now uses `.pytest_cache/tmp` instead, so the normal test command works without administrator privileges or changing Windows folder permissions.
+
+For an older extracted copy, use this command from the project root:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q --basetemp=.pytest_cache/tmp
+```
+
+For the permanent fix, set `addopts = "-ra --basetemp=.pytest_cache/tmp"` in `pyproject.toml`. This dedicated directory is disposable: pytest clears it before each run. It is already excluded from Git; do not store project files there. Run one test invocation at a time with this directory, or choose a separate dedicated `--basetemp` for concurrent runs.
+
+### Application settings
+
 | Setting | Default | Purpose |
 |---|---|---|
 | `APP_HOST` | `127.0.0.1` | Waitress bind address |
