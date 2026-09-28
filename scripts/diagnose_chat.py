@@ -1,7 +1,8 @@
-"""Diagnose response formatting on development prompts, never held-out benchmark cases."""
+"""Diagnose development prompts or explicitly labeled benchmark-failure replays."""
 import argparse
 from datetime import datetime, timezone
 import json
+from pathlib import Path
 import io
 import time
 import urllib.error
@@ -15,9 +16,32 @@ from policy_assistant.retrieval import HybridRetriever
 from policy_assistant.chat import validate_answer, AnswerValidationError, PROMPT_VERSION
 
 
+
+def load_failed_cases(directory):
+    """Select failed questions and frozen evidence, never gold answers."""
+    directory = Path(directory)
+    benchmark = json.loads((directory / "benchmark.json").read_text(encoding="utf-8"))
+    questions = {item["id"]: item["question"] for item in benchmark}
+    responses = [json.loads(line) for line in
+                 (directory / "responses.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+    cases = []
+    for row in responses:
+        if row["http_status"] == 200:
+            continue
+        attempts = row.get("attempts", [])
+        hits = attempts[-1].get("retrieved", []) if attempts else []
+        if not hits:
+            raise ValueError("Failed case has no saved evidence: " + row["id"])
+        cases.append({"id": row["id"], "question": questions[row["id"]], "retrieved": hits})
+    if not cases:
+        raise ValueError("Run has no failed requests to diagnose")
+    return cases
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--delay", type=float, default=30)
+    parser.add_argument("--failed-run", type=Path, help="Replay failures from a saved run; this is benchmark-informed diagnosis, not a scored evaluation.")
     args = parser.parse_args()
     if not 0 <= args.delay <= 300:
         parser.error("delay must be between 0 and 300")
@@ -32,13 +56,21 @@ def main():
         {"id": "D01+D05", "question": development["D01"]["question"] + " Also, " + development["D05"]["question"]},
         {"id": "D02+D03", "question": development["D02"]["question"] + " Also, " + development["D03"]["question"]}
     ]
-    retriever = HybridRetriever(PROJECT_ROOT)
+    if args.failed_run:
+        try:
+            cases = load_failed_cases(args.failed_run)
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            parser.error(str(exc))
+    retriever = None if args.failed_run else HybridRetriever(PROJECT_ROOT)
     generator = GroqGenerator(provider)
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "-" + uuid.uuid4().hex[:8]
     path = PROJECT_ROOT / "evaluation/runs" / ("diagnostic-" + run_id + ".json")
-    report = {"scope": "development formatting diagnosis; not held-out evaluation",
+    report = {"scope": ("benchmark-informed failure replay; not a new held-out evaluation or replacement result"
+                        if args.failed_run else "development formatting diagnosis; not held-out evaluation"),
+              "source_run": args.failed_run.name if args.failed_run else None,
               "model": provider.model, "prompt_version": PROMPT_VERSION,
-              "index_fingerprint": retriever.record["fingerprint"], "results": []}
+              "index_fingerprint": retriever.record["fingerprint"] if retriever else None,
+              "evidence_mode": "saved retrieval" if args.failed_run else "current retrieval", "results": []}
     actual_urlopen = urllib.request.urlopen
     provider_failure = {}
     def observed_urlopen(*a, **kw):
@@ -63,7 +95,7 @@ def main():
         if position:
             time.sleep(args.delay)
         provider_failure.clear()
-        hits = retriever.search(case["question"], k=4)
+        hits = case["retrieved"] if args.failed_run else retriever.search(case["question"], k=4)
         row = {**case, "retrieved": hits}
         try:
             with patch("urllib.request.urlopen", observed_urlopen):
