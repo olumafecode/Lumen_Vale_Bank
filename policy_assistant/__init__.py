@@ -106,6 +106,7 @@ def create_app(settings: Settings | None = None, *, generator=None, retriever_fa
             result.update(latency_ms=round((time.perf_counter() - start) * 1000, 1),
                           model=provider.model, prompt_version=PROMPT_VERSION,
                           provider_attempts=getattr(generator, "last_attempt_count", 1),
+                          response_format_recovered=getattr(generator, "response_format_recovered", False),
                           index_fingerprint=service.record["fingerprint"])
             return jsonify(result)
         except ProviderError as exc:

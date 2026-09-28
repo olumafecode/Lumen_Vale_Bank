@@ -15,7 +15,7 @@
 | Web chat `/` and POST `/chat` | Routes, interface, source links and snippets | Implemented; missing-key browser path verified |
 | JSON `/health` | Flask route with source verification and explicit RAG readiness | Corpus and index status implemented |
 | Public deployment or working local demo | Later stages | Local chat and live API smoke checks verified; recorded demo pending |
-| GitHub Actions on push/PR | Later CI stage | Not implemented; local tests ready to reuse |
+| GitHub Actions on push/PR | .github/workflows/ci.yml | Implemented; first hosted run must be verified after push |
 | 15-30 evaluation questions | 25 scored cases, separate five development prompts | Draft complete |
 | Groundedness and citation accuracy results | Later model evaluation | NOT_RUN |
 | p50/p95 end-to-end latency for 10-20 queries | Planned 20-query run | NOT_RUN |

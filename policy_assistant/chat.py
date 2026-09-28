@@ -2,7 +2,7 @@
 import re
 
 REFUSAL = "I can only answer about our policies. I could not find enough supporting evidence to answer this question."
-PROMPT_VERSION = "policy-claims-v3-compound"
+PROMPT_VERSION = "policy-claims-v4-envelope-repair"
 
 
 class AnswerValidationError(ValueError):
@@ -58,3 +58,30 @@ def validate_answer(result, hits):
     answer = "\n\n".join(c["text"] + " " + " ".join(f"[{n}]" for n in c["citation_numbers"])
                         for c in output)
     return {"answer": answer, "claims": output, "citations": citations, "refused": False}
+
+
+def recover_mixed_answer_list(value, hits):
+    """Repair only the observed envelope-plus-claims list; validate before use."""
+    if not isinstance(value, list) or not 2 <= len(value) <= 5:
+        raise AnswerValidationError("Unrecognized response envelope")
+    first = value[0]
+    if (not isinstance(first, dict) or set(first) != {"answerable", "claims"}
+            or first["answerable"] is not True or not isinstance(first["claims"], list)):
+        raise AnswerValidationError("Unrecognized response envelope")
+    claims = list(first["claims"])
+    for claim in value[1:]:
+        if not isinstance(claim, dict) or set(claim) != {"text", "citations"}:
+            raise AnswerValidationError("Unrecognized response envelope")
+        claims.append(claim)
+    for claim in claims:
+        if not isinstance(claim, dict) or set(claim) != {"text", "citations"}:
+            raise AnswerValidationError("Unrecognized response envelope")
+        if not isinstance(claim["citations"], list) or any(
+            not isinstance(ref, dict) or set(ref) != {"chunk_id", "quote"}
+            for ref in claim["citations"]
+        ):
+            raise AnswerValidationError("Unrecognized citation structure")
+    result = {"answerable": True, "claims": claims}
+    # This does not establish entailment; it enforces the same safeguards as /chat.
+    validate_answer(result, hits)
+    return result

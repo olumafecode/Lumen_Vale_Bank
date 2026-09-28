@@ -63,15 +63,15 @@ For a runtime-only environment, install `requirements.txt` instead. `waitress` s
 
 ### Windows test temporary-directory permissions
 
-If pytest reports `PermissionError: [WinError 5]` for `AppData/Local/Temp/pytest-of-...`, its default temporary directory is inaccessible to the current process. The project config now uses `.pytest_cache/tmp` instead, so the normal test command works without administrator privileges or changing Windows folder permissions.
+If pytest reports `PermissionError: [WinError 5]` for `AppData/Local/Temp/pytest-of-...`, its default temporary directory is inaccessible to the current process. The project config now uses `.pytest_tmp` instead, so the normal test command works without administrator privileges or changing Windows folder permissions.
 
 For an older extracted copy, use this command from the project root:
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest -q --basetemp=.pytest_cache/tmp
+.\.venv\Scripts\python.exe -m pytest -q --basetemp=.pytest_tmp
 ```
 
-For the permanent fix, set `addopts = "-ra --basetemp=.pytest_cache/tmp"` in `pyproject.toml`. This dedicated directory is disposable: pytest clears it before each run. It is already excluded from Git; do not store project files there. Run one test invocation at a time with this directory, or choose a separate dedicated `--basetemp` for concurrent runs.
+For the permanent fix, set `addopts = "-ra --basetemp=.pytest_tmp"` in `pyproject.toml`. This dedicated directory is disposable: pytest clears it before each run. It is already excluded from Git; do not store project files there. Run one test invocation at a time with this directory, or choose a separate dedicated `--basetemp` for concurrent runs.
 
 ### Application settings
 
@@ -140,3 +140,7 @@ Hashes verify downloaded package artifacts; they are not a promise of byte-ident
 6. **Later:** GitHub Actions on push/PR, optional hosting, final design documentation, demo, and submission PDF.
 
 The local Git repository does not by itself create a GitHub repository, publish files, grant grader access, run CI, or deploy the application. Those actions remain in later stages. No real banking data, paid content, private organizational policies, or operational credentials are included.
+
+## Continuous integration
+
+Every push and pull request runs [Policy assistant CI](https://github.com/olumafecode/Lumen_Vale_Bank/actions): Python 3.12 on Windows, hashed dependency installation, dependency/corpus checks, app imports, and the full automated test suite. See [CI workflow and development process](docs/ci.md). Local passes and GitHub Actions results are reported separately.

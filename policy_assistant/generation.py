@@ -7,6 +7,8 @@ import time
 import urllib.error
 import urllib.request
 
+from .chat import recover_mixed_answer_list, AnswerValidationError
+
 ENDPOINT = "https://api.groq.com/openai/v1/chat/completions"
 
 
@@ -109,6 +111,7 @@ class GroqGenerator:
         if self.settings.model in {"openai/gpt-oss-20b", "openai/gpt-oss-120b"}:
             payload["reasoning_effort"] = "low"
         self.last_attempt_count = 0
+        self.response_format_recovered = False
         deadline = time.monotonic() + 30
         for attempt in range(2):
             self.last_attempt_count += 1
@@ -129,14 +132,33 @@ class GroqGenerator:
                 choice = result["choices"][0]
                 if choice.get("finish_reason") != "stop":
                     raise ProviderError("The model did not finish a valid answer. Please retry.")
-                return json.loads(choice["message"]["content"])
+                value = json.loads(choice["message"]["content"])
+                if isinstance(value, list):
+                    try:
+                        value = recover_mixed_answer_list(value, hits)
+                        self.response_format_recovered = True
+                    except AnswerValidationError:
+                        pass
+                return value
             except urllib.error.HTTPError as exc:
                 error_code = None
+                failed_generation = None
                 if exc.code == 400:
                     try:
-                        error_code = json.loads(exc.read(262144)).get("error", {}).get("code")
+                        provider_error = json.loads(exc.read(262144)).get("error", {})
+                        error_code = provider_error.get("code")
+                        failed_generation = provider_error.get("failed_generation")
                     except (ValueError, AttributeError):
                         pass
+                if error_code == "json_validate_failed" and isinstance(failed_generation, str):
+                    try:
+                        value = json.loads(failed_generation)
+                        repaired = recover_mixed_answer_list(value, hits)
+                    except (ValueError, TypeError, RecursionError):
+                        pass
+                    else:
+                        self.response_format_recovered = True
+                        return repaired
                 if attempt == 0 and error_code == "json_validate_failed":
                     payload["messages"][0]["content"] += (
                         "\nFORMAT REPAIR: The previous attempt failed JSON validation. "

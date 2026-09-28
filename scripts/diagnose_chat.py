@@ -81,6 +81,7 @@ def main():
             row["app_status"] = exc.status
             row["error"] = str(exc)
             row["provider_diagnostic"] = dict(provider_failure)
+        row["response_format_recovered"] = getattr(generator, "response_format_recovered", False)
         row["provider_attempts"] = getattr(generator, "last_attempt_count", 1)
         if provider_failure:
             row["provider_diagnostic"] = dict(provider_failure)

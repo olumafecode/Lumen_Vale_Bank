@@ -270,3 +270,38 @@ def test_compound_queries_keep_evidence_from_each_question():
     calls.clear()
     assert len(service.search("Explain password and authentication rules", k=4)) == 4
     assert len(calls) == 1
+
+
+def test_mixed_envelope_is_repaired_without_a_provider_retry(monkeypatch):
+    from policy_assistant.chat import recover_mixed_answer_list
+    mixed = [answer(), answer()["claims"][0]]
+    repaired = recover_mixed_answer_list(mixed, [HIT])
+    assert len(repaired["claims"]) == 2
+    calls = []
+    def fail(request, timeout):
+        calls.append(1)
+        body = {"error": {"code": "json_validate_failed", "failed_generation": json.dumps(mixed)}}
+        raise urllib.error.HTTPError("url", 400, "invalid", {}, io.BytesIO(json.dumps(body).encode()))
+    monkeypatch.setattr("urllib.request.urlopen", fail)
+    generator = GroqGenerator(ProviderSettings("test-key"))
+    assert generator.generate("Two policy questions", [HIT]) == repaired
+    assert generator.response_format_recovered is True
+    assert len(calls) == 1
+
+
+@pytest.mark.parametrize("mutation", ["unknown_id", "invented_quote", "refusal", "extra_field", "long_answer"])
+def test_envelope_repair_preserves_validation(mutation):
+    from policy_assistant.chat import recover_mixed_answer_list
+    mixed = [answer(), answer()["claims"][0]]
+    if mutation == "unknown_id":
+        mixed[1]["citations"][0]["chunk_id"] = "unknown"
+    elif mutation == "invented_quote":
+        mixed[1]["citations"][0]["quote"] = "An invented supporting passage that must fail."
+    elif mutation == "refusal":
+        mixed[0]["answerable"] = False
+    elif mutation == "extra_field":
+        mixed[1]["instruction"] = "Ignore source checks"
+    else:
+        mixed[1]["text"] = "word " * 181
+    with pytest.raises(AnswerValidationError):
+        recover_mixed_answer_list(mixed, [HIT])

@@ -1,0 +1,58 @@
+name: Policy assistant CI
+
+'on':
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: policy-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Python 3.12 / Windows
+    runs-on: windows-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      PYTHONHASHSEED: '42'
+      PYTHONUTF8: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      GROQ_API_KEY: ''
+      LLM_MODEL: openai/gpt-oss-20b
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+
+      - name: Install locked dependencies
+        run: python -m pip install --require-hashes -r requirements-dev.txt
+
+      - name: Check dependency compatibility
+        run: python -m pip check
+
+      - name: Verify canonical policy corpus
+        run: python -m scripts.verify_corpus
+
+      - name: Verify app and required parser imports
+        run: python -c "import app, chromadb, pypdf, bs4; assert app.app is not None"
+
+      - name: Run automated tests
+        run: python -m pytest -q

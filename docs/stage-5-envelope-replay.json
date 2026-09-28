@@ -1,0 +1,19 @@
+{
+  "scope": "offline replay, not new live generation or final semantic scoring",
+  "results": [
+    {
+      "id": "D01+D05",
+      "status": "validated_from_preserved_output",
+      "claims": 2,
+      "citations": 2,
+      "answer": "An administrator must not use an everyday human account for privileged work; privileged administrators must use a separate administrative account and a hardware security key, while their everyday account must not hold standing administrator privileges. [1]\n\nThe internal response target for a privacy request is 20 business days from the bank’s original receipt of the request. [2]"
+    },
+    {
+      "id": "D02+D03",
+      "status": "validated_from_preserved_output",
+      "claims": 2,
+      "citations": 2,
+      "answer": "A teller’s manual account adjustment must be checked by an independent checker before posting. [1]\n\nA CU 32 eligible travel meal is reimbursed in full, i.e., CU 32, and does not exceed the CU 40 daily meal cap. [2]"
+    }
+  ]
+}
