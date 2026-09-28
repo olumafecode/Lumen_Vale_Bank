@@ -23,6 +23,10 @@ def answer():
             "citations": [{"chunk_id": CID, "quote": QUOTE}]}]}
 
 
+def wire_answer():
+    return {"claims": [{"text": answer()["claims"][0]["text"], "sources": ["S1"]}]}
+
+
 class FakeRetriever:
     record = {"fingerprint": "test"}
     embedding = SimpleNamespace(count=lambda _: 20)
@@ -157,13 +161,14 @@ def test_provider_payload_and_json_response(monkeypatch):
         schema = payload["response_format"]["json_schema"]["schema"]
         assert schema["type"] == "object"
         assert schema["additionalProperties"] is False
-        citation = schema["properties"]["claims"]["items"]["properties"]["citations"]["items"]
-        assert citation["properties"]["chunk_id"]["enum"] == [CID]
+        citation = schema["properties"]["claims"]["items"]["properties"]["sources"]["items"]
+        assert citation["enum"] == ["S1"]
         assert payload["temperature"] == 0
         assert len(payload["messages"]) == 2
-        assert CID in payload["messages"][1]["content"]
+        assert "S1" in payload["messages"][1]["content"]
+        assert CID not in payload["messages"][1]["content"]
         return io.BytesIO(json.dumps({"choices": [{"finish_reason": "stop",
-                           "message": {"content": json.dumps(answer())}}]}).encode())
+                           "message": {"content": json.dumps(wire_answer())}}]}).encode())
     monkeypatch.setattr("urllib.request.urlopen", respond)
     assert GroqGenerator(ProviderSettings("test-key")).generate("Leave?", [HIT])["answerable"]
 
@@ -181,33 +186,47 @@ def test_provider_timeout_and_truncated_response(monkeypatch):
         GroqGenerator(ProviderSettings("test-key")).generate("Leave?", [HIT])
 
 
-def test_strict_schema_rejects_list_wrong_boolean_and_unknown_citation():
+def test_source_schema_rejects_old_envelope_and_unknown_citation():
     from jsonschema import Draft202012Validator
     from policy_assistant.generation import answer_format
-    schema = answer_format([HIT])["json_schema"]["schema"]
-    validator = Draft202012Validator(schema)
-    assert validator.is_valid(answer())
-    assert validator.is_valid({"answerable": False, "claims": []})
-    malformed = [answer(), answer()["claims"][0]]
-    assert not validator.is_valid(malformed)
-    with pytest.raises(AnswerValidationError, match="Invalid answer structure"):
-        validate_answer(malformed, [HIT])
-    wrong_boolean = answer()
-    wrong_boolean["answerable"] = "true"
-    assert not validator.is_valid(wrong_boolean)
-    wrong_id = answer()
-    wrong_id["claims"][0]["citations"][0]["chunk_id"] = "not-retrieved"
-    assert not validator.is_valid(wrong_id)
+    validator = Draft202012Validator(answer_format([HIT])["json_schema"]["schema"])
+    assert validator.is_valid(wire_answer())
+    assert validator.is_valid({"claims": []})
+    assert not validator.is_valid(answer())
+    assert not validator.is_valid([wire_answer()])
+    value = wire_answer()
+    value["claims"][0]["sources"] = ["unknown"]
+    assert not validator.is_valid(value)
 
 
-def test_schema_does_not_replace_quote_validation():
-    from jsonschema import Draft202012Validator
-    from policy_assistant.generation import answer_format
-    value = answer()
-    value["claims"][0]["citations"][0]["quote"] = "This quotation is invented and must remain rejected."
-    assert Draft202012Validator(answer_format([HIT])["json_schema"]["schema"]).is_valid(value)
-    with pytest.raises(AnswerValidationError, match="not an exact source"):
-        validate_answer(value, [HIT])
+def test_source_mapping_preserves_exact_text_and_refusal():
+    from policy_assistant.generation import resolve_source_claims
+    hit = dict(HIT, text="First rule. Intervening condition. Another bank-required rule.")
+    result = resolve_source_claims(wire_answer(), [hit])
+    assert result["claims"][0]["citations"][0]["quote"] == hit["text"]
+    assert result["claims"][0]["citations"][0]["chunk_id"] == CID
+    assert validate_answer(resolve_source_claims({"claims": []}, [hit]), [hit])["refused"]
+
+
+@pytest.mark.parametrize("mutation", ["unknown", "empty", "quote", "long", "type", "many"])
+def test_source_contract_still_rejects_invalid_answers(mutation):
+    from policy_assistant.generation import resolve_source_claims
+    value = wire_answer()
+    claim = value["claims"][0]
+    if mutation == "unknown":
+        claim["sources"] = ["S2"]
+    elif mutation == "empty":
+        claim["sources"] = []
+    elif mutation == "quote":
+        claim["quote"] = "Invented source text"
+    elif mutation == "long":
+        claim["text"] = "word " * 181
+    elif mutation == "type":
+        claim["sources"] = [{}]
+    else:
+        value["claims"] *= 6
+    with pytest.raises(AnswerValidationError):
+        resolve_source_claims(value, [HIT])
 
 
 def test_json_format_error_retries_once_with_same_evidence(monkeypatch):
@@ -219,7 +238,7 @@ def test_json_format_error_retries_once_with_same_evidence(monkeypatch):
             raise urllib.error.HTTPError("url", 400, "invalid", {}, io.BytesIO(
                 b'{"error":{"code":"json_validate_failed","failed_generation":"untrusted"}}'))
         return io.BytesIO(json.dumps({"choices": [{"finish_reason": "stop",
-            "message": {"content": json.dumps(answer())}}]}).encode())
+            "message": {"content": json.dumps(wire_answer())}}]}).encode())
     monkeypatch.setattr("urllib.request.urlopen", respond)
     generator = GroqGenerator(ProviderSettings("test-key"))
     assert generator.generate("Leave?", [HIT])["answerable"]
@@ -272,21 +291,10 @@ def test_compound_queries_keep_evidence_from_each_question():
     assert len(calls) == 1
 
 
-def test_mixed_envelope_is_repaired_without_a_provider_retry(monkeypatch):
+def test_legacy_envelope_recovery_remains_valid_for_offline_records():
     from policy_assistant.chat import recover_mixed_answer_list
     mixed = [answer(), answer()["claims"][0]]
-    repaired = recover_mixed_answer_list(mixed, [HIT])
-    assert len(repaired["claims"]) == 2
-    calls = []
-    def fail(request, timeout):
-        calls.append(1)
-        body = {"error": {"code": "json_validate_failed", "failed_generation": json.dumps(mixed)}}
-        raise urllib.error.HTTPError("url", 400, "invalid", {}, io.BytesIO(json.dumps(body).encode()))
-    monkeypatch.setattr("urllib.request.urlopen", fail)
-    generator = GroqGenerator(ProviderSettings("test-key"))
-    assert generator.generate("Two policy questions", [HIT]) == repaired
-    assert generator.response_format_recovered is True
-    assert len(calls) == 1
+    assert len(recover_mixed_answer_list(mixed, [HIT])["claims"]) == 2
 
 
 @pytest.mark.parametrize("mutation", ["unknown_id", "invented_quote", "refusal", "extra_field", "long_answer"])
@@ -305,3 +313,21 @@ def test_envelope_repair_preserves_validation(mutation):
         mixed[1]["text"] = "word " * 181
     with pytest.raises(AnswerValidationError):
         recover_mixed_answer_list(mixed, [HIT])
+
+
+def test_provider_source_ids_map_multiple_claims_to_original_sources(monkeypatch):
+    second = dict(HIT, chunk_id="b" * 64, text="The second policy has a bank-required approval condition.")
+    value = {"claims": [
+        {"text": "The second policy requires approval.", "sources": ["S2"]},
+        {"text": "Full-time staff receive 20 days.", "sources": ["S1"]}]}
+    monkeypatch.setattr("urllib.request.urlopen", lambda *a, **k: io.BytesIO(
+        json.dumps({"choices": [{"finish_reason": "stop", "message": {
+            "content": json.dumps(value)}}]}).encode()))
+    generator = GroqGenerator(ProviderSettings("test-key"))
+    resolved = generator.generate("Two questions?", [HIT, second])
+    validated = validate_answer(resolved, [HIT, second])
+    assert validated["citations"][0]["chunk_id"] == second["chunk_id"]
+    assert validated["citations"][0]["snippet"] == second["text"]
+    assert validated["citations"][1]["chunk_id"] == CID
+    assert generator.last_raw_output == value
+    assert generator.last_attempt_count == 1

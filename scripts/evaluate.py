@@ -107,7 +107,7 @@ def main():
                 "provider": "groq", "model": provider.model, "temperature": 0,
                 "max_completion_tokens": 2048, "reasoning_effort": "low" if provider.model.startswith("openai/gpt-oss-") else "provider_default",
                 "prompt_version": PROMPT_VERSION, "system_prompt": SYSTEM_PROMPT,
-                "response_format": "strict_json_schema_with_retrieved_chunk_id_enum",
+                "response_format": "strict_json_schema_with_short_source_ids_and_server_passages",
                 "retrieval": {"method": "BM25+dense RRF", "k_per_question": 4, "max_context_chunks": 12, "max_question_parts": 3, "candidates_each": 20, "rrf_constant": 60},
                 "index": json.loads((root / "data/index/active.json").read_text()),
                 "python": platform.python_version(), "os": platform.platform(),

@@ -108,11 +108,16 @@ def main():
             except AnswerValidationError as exc:
                 row["status"] = "validation_failed"
                 row["validation_reason"] = str(exc)
+        except AnswerValidationError as exc:
+            row["status"] = "validation_failed"
+            row["validation_reason"] = str(exc)
+            row["raw_model_output"] = getattr(generator, "last_raw_output", None)
         except ProviderError as exc:
             row["status"] = "provider_failed"
             row["app_status"] = exc.status
             row["error"] = str(exc)
             row["provider_diagnostic"] = dict(provider_failure)
+        row["raw_provider_output"] = getattr(generator, "last_raw_output", None)
         row["response_format_recovered"] = getattr(generator, "response_format_recovered", False)
         row["provider_attempts"] = getattr(generator, "last_attempt_count", 1)
         if provider_failure:
@@ -121,7 +126,7 @@ def main():
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         print(json.dumps({k: v for k, v in row.items()
-                          if k not in {"retrieved", "raw_model_output", "validated_answer", "provider_diagnostic"}}), flush=True)
+                          if k not in {"retrieved", "raw_model_output", "validated_answer", "provider_diagnostic", "raw_provider_output"}}), flush=True)
         if row.get("app_status") in (429, 503, 504):
             break
     print("Diagnostic saved: " + str(path), flush=True)

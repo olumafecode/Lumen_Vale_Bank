@@ -2,7 +2,7 @@
 import re
 
 REFUSAL = "I can only answer about our policies. I could not find enough supporting evidence to answer this question."
-PROMPT_VERSION = "policy-claims-v4-envelope-repair"
+PROMPT_VERSION = "policy-claims-v5-source-ids"
 
 
 class AnswerValidationError(ValueError):
