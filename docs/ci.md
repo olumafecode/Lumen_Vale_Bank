@@ -34,3 +34,11 @@ Official references:
 ## Local preflight
 
 The initial workflow was checked against a fresh source copy without .env, an index, or a model cache: all 78 tests passed using the existing Python 3.12 virtual environment. Dependency compatibility, corpus verification, and app/parser imports also passed. A fresh dependency installation and the hosted Actions result remain to be verified by GitHub. Pytest uses the ignored project-root .pytest_tmp directory so it does not depend on an existing cache folder.
+
+## Corpus checkout line endings
+
+The first hosted run failed corpus verification because the original 12 policy files use CRLF line endings while the default Git attribute checked them out as LF. The manifest hashes original bytes, so identical wording with different line endings correctly fails verification. The corpus-specific `text eol=crlf` attribute restores the original bytes on checkout on every platform. The manifest, policy wording, and hash validator remain unchanged.
+
+The earlier preflight copied working files and therefore missed Git checkout conversion. Future checkout-sensitive verification must use an actual Git checkout, not a filesystem copy. The CI corpus verification step remains mandatory.
+
+Fix validation: a fresh local Git clone of commit 849e5f0 verified all 12 original manifest hashes and passed all 78 tests using the existing Python 3.12 environment. The hosted rerun remains pending publication.

@@ -2,3 +2,6 @@
 *.pdf binary
 *.png binary
 *.zip binary
+
+# Preserve the original policy bytes used by the corpus manifest and index.
+/corpus/*.md text eol=crlf
