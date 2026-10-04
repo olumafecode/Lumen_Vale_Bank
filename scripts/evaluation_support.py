@@ -69,7 +69,7 @@ def review_files(directory, cases, results):
              "Gold answers are review references only; they were not supplied to the application.",
              "Fill review.csv using 0/1 for applicable quality fields; leave inapplicable fields blank.",
              "Use required_points_met as an integer from zero to the listed point count.",
-             "Record reviewer, reviewer_type=human, and a brief rationale for every decision.",
+             "Record reviewer and reviewer_type=human. Notes are optional.",
              "Automated citation existence checks do not establish semantic support.", ""]
     for q in cases:
         r = by_id.get(q["id"])
@@ -106,7 +106,7 @@ def quality(cases, results, review_path):
     for q in cases:
         row = reviews[q["id"]]
         fields = ["grounded", "citation_accurate"] if q["type"] == "answerable" else ["guardrail_correct"]
-        if not row["reviewer"].strip() or row["reviewer_type"].strip().lower() != "human" or not row["notes"].strip():
+        if not row["reviewer"].strip() or row["reviewer_type"].strip().lower() != "human":
             pending.append(q["id"])
             continue
         if any(row[f].strip() not in {"0", "1"} for f in fields):

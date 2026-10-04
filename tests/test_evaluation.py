@@ -48,13 +48,13 @@ def test_review_requires_human_and_preserves_work(tmp_path):
     assert quality(CASES, [], path)["status"] == "human_review_pending"
 
 
-def write_review(path, reviewer_type="human", invalid_credit=False):
+def write_review(path, reviewer_type="human", invalid_credit=False, notes="Checked against captured evidence"):
     with path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=REVIEW_FIELDS)
         writer.writeheader()
         for q in CASES:
             fields = {"id": q["id"], "reviewer": "Reviewer", "reviewer_type": reviewer_type,
-                      "notes": "Checked against captured evidence"}
+                      "notes": notes}
             if q["type"] == "answerable":
                 value = "1" if q["id"] == "Q01" or invalid_credit else "0"
                 fields.update(grounded=value, citation_accurate=value, required_points_met=value)
@@ -71,6 +71,15 @@ def test_strict_and_answer_only_denominators(tmp_path):
     assert scores["citation_accuracy_answer_only"] == 1
     assert scores["answer_only_denominator"] == 1
     assert scores["guardrail_passes"] == 1
+
+
+def test_notes_are_optional_but_human_review_is_required(tmp_path):
+    path = tmp_path / "review.csv"
+    results = [row("Q01"), row("Q02", status=502), row("Q03", refused=True)]
+    write_review(path, notes="")
+    assert quality(CASES, results, path)["status"] == "human_reviewed"
+    write_review(path, reviewer_type="ai", notes="")
+    assert quality(CASES, results, path)["status"] == "human_review_pending"
 
 
 def test_ai_only_review_and_false_failure_credit_rejected(tmp_path):
